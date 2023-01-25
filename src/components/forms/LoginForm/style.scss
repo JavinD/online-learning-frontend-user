@@ -1,0 +1,46 @@
+$default-font: "Open Sans";
+$primary-color: #f06001;
+$secondary-color: #2ca396;
+$primary-text-color: #002337;
+$secondary-text-color: #80868b;
+
+.form-container {
+  .form-login-text {
+    padding-bottom: 2rem;
+    .login-greeting {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .login-subgreeting {
+      font-size: 1rem;
+      font-weight: 300;
+      margin-bottom: 1rem;
+      color: $secondary-text-color;
+    }
+  }
+
+  .login-btn {
+    background: linear-gradient(to right, $secondary-color, $primary-color);
+    width: 100%;
+    font-weight: 700;
+    padding: 0.8rem;
+  }
+
+  .auth-form-section {
+    padding-top: 0.5rem;
+    .auth-form-label {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  .form-note {
+    font-size: 0.8rem;
+    font-weight: 300;
+    margin-top: 0.5rem;
+    color: $secondary-text-color;
+  }
+}

@@ -1,20 +1,22 @@
 import React from "react";
-import "./App.css";
+import "./App.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Routes, Route } from "react-router-dom";
 import DashboardPage from "./pages/Admin/DashboardPage";
 import NotFoundPage from "./pages/NotFoundPage";
-import LoginPage from "./pages/Admin/LoginPage";
+import AdminLoginPage from "./pages/Admin/LoginPage";
+import UserLoginPage from "./pages/User/LoginPage";
 
 function App() {
   return (
-    <div className="App container">
+    <div className="App">
       <Routes>
         <Route path="/admin">
           <Route index element={<DashboardPage />} />
         </Route>
 
-        <Route path="login" element={<LoginPage />} />
+        <Route path="admin-login" element={<AdminLoginPage />} />
+        <Route path="user-login" element={<UserLoginPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </div>

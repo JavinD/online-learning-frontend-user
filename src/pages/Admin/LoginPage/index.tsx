@@ -3,9 +3,14 @@ import LoginForm from "../../../components/forms/LoginForm";
 import "./style.scss";
 
 export default function LoginPage() {
+  const data = {
+    identifier: "admin",
+    password: "admin",
+  };
+
   return (
     <div className="row vh-100">
-      <div className="col-md-6 d-flex align-items-center justify-content-center">
+      {/* <div className="col-md-6 d-flex align-items-center justify-content-center">
         <div className="login-hero">
           <div className="login-hero-box">
             <div className="login-hero-text">
@@ -19,8 +24,8 @@ export default function LoginPage() {
         </div>
       </div>
       <div className="col-md-6 d-flex justify-content-center align-items-center">
-        <LoginForm />
-      </div>
+        <LoginForm data={data} />
+      </div> */}
     </div>
   );
 }

@@ -1,10 +1,18 @@
-import React from "react";
+import React, { ChangeEventHandler, FormEventHandler } from "react";
 import { NavLink } from "react-router-dom";
+import { LoginRequest } from "../../../interfaces";
 import AuthButton from "../../buttons/AuthButton";
 import GenericInput from "../../inputs/GenericInput";
 import "./style.scss";
 
-export default function LoginForm() {
+type Props = {
+  data: LoginRequest;
+  onChange: ChangeEventHandler<HTMLInputElement>;
+  onSubmit: FormEventHandler<HTMLFormElement>;
+  error: LoginRequest;
+};
+
+export default function LoginForm({ data, onChange, onSubmit, error }: Props) {
   return (
     <div>
       <div className="form-container">
@@ -15,16 +23,26 @@ export default function LoginForm() {
           </h3>
         </div>
 
-        <form>
+        <form onSubmit={onSubmit}>
           <div className="mb-3 auth-form-section">
             <GenericInput
               label="Email/Phone/Username"
               type="text"
+              value={data.identifier}
               formText="We'll never share your information with anyone else."
+              onChange={onChange}
+              name="identifier"
             />
           </div>
           <div className="mb-3 auth-form-section">
-            <GenericInput label="Password" type="password" formText="" />
+            <GenericInput
+              label="Password"
+              type="password"
+              value={data.password}
+              formText=""
+              onChange={onChange}
+              name="password"
+            />
           </div>
           <h4 className="form-note">
             New to DigiEdu? <NavLink to="/register">Register</NavLink>{" "}

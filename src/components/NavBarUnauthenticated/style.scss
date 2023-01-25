@@ -1,0 +1,30 @@
+$font-stack: "Open Sans";
+$primary-color: #f06001;
+$secondary-color: #2ca396;
+$primary-text-color: #002337;
+$secondary-text-color: #80868b;
+
+.navbar-unauth {
+  background-color: white;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  .container {
+    .navbar-nav {
+      .nav-link {
+        color: $secondary-text-color;
+        &:hover {
+          text-decoration: underline;
+        }
+        &.active {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+  .brand-text {
+    font-weight: 900;
+    font-size: 1.5rem;
+    color: $primary-text-color;
+  }
+  padding-left: 0;
+  padding-right: 0;
+}

@@ -8,7 +8,7 @@ $secondary-text-color: #80868b;
   .form-login-text {
     padding-bottom: 2rem;
     .login-greeting {
-      font-size: 4rem;
+      font-size: 2rem;
       font-weight: 700;
       margin-bottom: 1rem;
     }
@@ -28,18 +28,15 @@ $secondary-text-color: #80868b;
     padding: 0.8rem;
   }
 
-  .login-form-section {
-    padding-top: 0.5rem;
+  .auth-form-section {
     .auth-form-label {
-      font-size: 1.3rem;
+      font-size: 1rem;
       font-weight: 700;
-      margin-bottom: 0.5rem;
     }
 
     .auth-form-control {
-      font-size: 1.3rem;
+      font-size: 1rem;
       font-weight: 300;
-      padding: 0.5rem 1rem;
       border: 1px solid $secondary-text-color;
       border-radius: 0.5rem;
       margin-bottom: 0.2rem;

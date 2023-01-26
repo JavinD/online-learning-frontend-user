@@ -3,18 +3,16 @@ import "./styles.scss";
 
 type Props = {
   label: string;
-  type: string;
   formText: string;
   value: string;
-  onChange: ChangeEventHandler<HTMLInputElement>;
+  onChange: ChangeEventHandler<HTMLTextAreaElement>;
   name: string;
   error: string;
   required: boolean;
 };
 
-export default function index({
+export default function GenericTextArea({
   label,
-  type,
   formText,
   value,
   onChange,
@@ -25,8 +23,7 @@ export default function index({
   return (
     <div>
       <label className="form-label auth-form-label">{label}</label>
-      <input
-        type={type}
+      <textarea
         style={{
           borderColor: error !== "" ? "red" : "",
         }}
@@ -35,7 +32,7 @@ export default function index({
         value={value}
         onChange={onChange}
         name={name}
-        required={required}
+        required={true}
       />
       {error !== "" && (
         <span className="warning" role="alert">

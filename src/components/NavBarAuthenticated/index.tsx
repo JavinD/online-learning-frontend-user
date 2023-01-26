@@ -1,10 +1,17 @@
-import React from "react";
+import React, { MouseEventHandler } from "react";
 import { NavLink } from "react-router-dom";
 import "./style.scss";
 import { useCookies } from "react-cookie";
 
 export default function NavBar() {
   const [cookies, removeCookie] = useCookies(["token"]);
+
+  const logOut: MouseEventHandler<HTMLAnchorElement> = (e) => {
+    if (window.confirm("Are you sure you want to log out?")) {
+      removeCookie("token", { path: "/" });
+    } else {
+    }
+  };
 
   return (
     <div>
@@ -33,18 +40,16 @@ export default function NavBar() {
                 Home
               </NavLink>
               <NavLink className="nav-link ms-lg-5" to="/transfer">
-                Transfer
+                My Course
               </NavLink>
               <NavLink className="nav-link ms-lg-5" to="/topup">
-                Topup
+                My Profile
               </NavLink>
               <NavLink className="nav-link ms-lg-5" to="/games">
                 Games
               </NavLink>
               <NavLink
-                onClick={() => {
-                  removeCookie("token", { path: "/" });
-                }}
+                onClick={logOut}
                 className="nav-link ms-lg-5"
                 to="/user-login"
               >

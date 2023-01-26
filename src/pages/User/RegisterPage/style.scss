@@ -15,11 +15,13 @@ $secondary-text-color: #80868b;
     $primary-color
   );
   height: 100%;
+  min-width: 640px;
 
   .login-hero-box {
     background-color: rgba(255, 255, 255, 0.2);
     padding: 4rem 4rem;
     margin: 0 10rem;
+    min-width: 400px;
 
     .login-hero-text {
       padding-right: 5rem;

@@ -9,6 +9,7 @@ import UserLoginPage from "./pages/User/LoginPage";
 import LayoutPage from "./pages/LayoutPage";
 import HomePage from "./pages/HomePage";
 import UnauthenticatedOnlyPage from "./pages/UnauthenticatedOnlyPage";
+import RegisterPage from "./pages/User/RegisterPage";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/" element={<LayoutPage />}>
           <Route element={<UnauthenticatedOnlyPage />}>
             <Route path="user-login" element={<UserLoginPage />} />
+            <Route path="register" element={<RegisterPage />} />
           </Route>
           <Route path="/" element={<HomePage />} />
         </Route>

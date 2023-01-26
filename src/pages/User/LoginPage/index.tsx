@@ -1,10 +1,10 @@
-import React, { ChangeEventHandler, FormEventHandler, useState } from "react";
+import { ChangeEventHandler, FormEventHandler, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import LoginForm from "../../../components/forms/LoginForm";
 import { LoginRequest } from "../../../interfaces";
-import "react-toastify/dist/ReactToastify.css";
 import "./style.scss";
 
 export default function LoginPage() {
@@ -14,18 +14,44 @@ export default function LoginPage() {
     identifier: "",
     password: "",
   });
-  const [error, setError] = useState<LoginRequest>({
+  const [errors, setError] = useState<LoginRequest>({
     identifier: "",
     password: "",
   });
   const [cookies, setCookie] = useCookies(["token"]);
+  const API_URL = process.env.REACT_APP_API_URL;
+
+  const validateError = (name: string, value: string) => {
+    let error = "";
+    if (name === "identifier") {
+      if (value === "") {
+        error = "Email, username or phone number is required";
+      }
+      setError({
+        ...errors,
+        [name]: error,
+      });
+    }
+
+    if (name === "password") {
+      if (value === "") {
+        error = "Password is required";
+      }
+
+      if (value.length < 8 || value.length > 20) {
+        error = "Password is must be between 8 to 20 characters";
+      }
+      setError({
+        ...errors,
+        [name]: error,
+      });
+    }
+  };
 
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
 
-    if (e.target.value === "") {
-      setError({ ...error, [e.target.name]: e.target.name + " is required" });
-    }
+    validateError(e.target.name, e.target.value);
   };
 
   const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
@@ -36,7 +62,7 @@ export default function LoginPage() {
       body: JSON.stringify(data),
     };
 
-    fetch(process.env.REACT_APP_API + "/user-login", requestOptions)
+    fetch(API_URL + "/user-login", requestOptions)
       .then((response) => {
         if (!response.ok) {
           if (response.status === 404) {
@@ -55,7 +81,9 @@ export default function LoginPage() {
         navigate("/");
       })
       .catch((error) => {
-        toast.error("Wrong identifier or password", {
+        let errorMessage = error.message;
+
+        toast.error(errorMessage, {
           position: "top-center",
           autoClose: 5000,
           hideProgressBar: false,
@@ -96,7 +124,7 @@ export default function LoginPage() {
       <div className="col-md-6 d-flex justify-content-center align-items-center">
         <LoginForm
           data={data}
-          error={error}
+          errors={errors}
           onChange={onChange}
           onSubmit={onSubmit}
         />

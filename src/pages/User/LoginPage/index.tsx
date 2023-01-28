@@ -50,7 +50,6 @@ export default function LoginPage() {
 
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
-
     validateError(e.target.name, e.target.value);
   };
 
@@ -110,7 +109,7 @@ export default function LoginPage() {
         pauseOnHover
         theme="light"
       />
-      <div className="col-md-6 d-flex flex-column justify-content-center login-hero">
+      <div className="col-xl-6 d-flex flex-column justify-content-center login-hero">
         <div className="login-hero-box">
           <div className="login-hero-text">
             <h2 className="login-hero-heading">
@@ -121,7 +120,7 @@ export default function LoginPage() {
           </div>
         </div>
       </div>
-      <div className="col-md-6 d-flex justify-content-center align-items-center">
+      <div className="col-xl-6 d-flex justify-content-center align-items-center">
         <LoginForm
           data={data}
           errors={errors}

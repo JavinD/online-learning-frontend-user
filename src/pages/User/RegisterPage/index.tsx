@@ -236,7 +236,7 @@ export default function RegisterPage() {
         pauseOnHover
         theme="light"
       />
-      <div className="col-md-5 d-flex flex-column justify-content-center login-hero">
+      <div className="col-xl-5 d-flex flex-column justify-content-center login-hero">
         <div className="login-hero-box">
           <div className="login-hero-text">
             <h2 className="login-hero-heading">
@@ -247,7 +247,7 @@ export default function RegisterPage() {
           </div>
         </div>
       </div>
-      <div className="col-md-5 d-flex justify-content-center align-items-center">
+      <div className="col-xl-5 d-flex justify-content-center align-items-center">
         <RegisterForm
           data={data}
           errors={errors}

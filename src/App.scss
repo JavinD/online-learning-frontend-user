@@ -4,8 +4,12 @@ $secondary-color: #2ca396;
 $primary-text-color: #002337;
 $secondary-text-color: #80868b;
 
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap");
 
 body {
-  font-family: "Open Sans", sans-serif;
+  font-family: "Lato";
+}
+
+.App {
+  font-family: "Lato", sans-serif;
 }

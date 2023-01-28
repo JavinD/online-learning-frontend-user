@@ -1,14 +1,17 @@
 import React, { MouseEventHandler } from "react";
-import { NavLink } from "react-router-dom";
+import { Navigate, NavLink, useNavigate } from "react-router-dom";
 import "./style.scss";
 import { useCookies } from "react-cookie";
 
 export default function NavBar() {
   const [cookies, removeCookie] = useCookies(["token"]);
+  const navigate = useNavigate();
 
   const logOut: MouseEventHandler<HTMLAnchorElement> = (e) => {
+    e.preventDefault();
     if (window.confirm("Are you sure you want to log out?")) {
       removeCookie("token", { path: "/" });
+      navigate("/user-login");
     } else {
     }
   };
@@ -39,15 +42,16 @@ export default function NavBar() {
               <NavLink className="nav-link ms-lg-5" aria-current="page" to="">
                 Home
               </NavLink>
-              <NavLink className="nav-link ms-lg-5" to="/transfer">
+              <NavLink className="nav-link ms-lg-5" to="/course">
+                Courses
+              </NavLink>
+              <NavLink className="nav-link ms-lg-5" to="/my-course">
                 My Course
               </NavLink>
-              <NavLink className="nav-link ms-lg-5" to="/topup">
+              <NavLink className="nav-link ms-lg-5" to="/profile">
                 My Profile
               </NavLink>
-              <NavLink className="nav-link ms-lg-5" to="/games">
-                Games
-              </NavLink>
+
               <NavLink
                 onClick={logOut}
                 className="nav-link ms-lg-5"

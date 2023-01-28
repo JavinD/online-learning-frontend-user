@@ -29,6 +29,9 @@ export default function NavBar() {
               <NavLink className="nav-link ms-lg-5" aria-current="page" to="">
                 Home
               </NavLink>
+              <NavLink className="nav-link ms-lg-5" to="/course">
+                Courses
+              </NavLink>
               <NavLink className="nav-link ms-lg-5" to="/user-login">
                 Login
               </NavLink>

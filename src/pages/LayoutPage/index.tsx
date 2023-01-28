@@ -3,8 +3,8 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { decodeToken, isExpired } from "react-jwt";
-import NavBarUnauthenticated from "../../components/NavBarUnauthenticated";
-import NavBarAuthenticated from "../../components/NavBarAuthenticated";
+import NavBarUnauthenticated from "../../components/navigations/NavBarUnauthenticated";
+import NavBarAuthenticated from "../../components/navigations/NavBarAuthenticated";
 
 export default function LayoutPage() {
   const [cookies] = useCookies(["token"]);
@@ -16,6 +16,7 @@ export default function LayoutPage() {
       <div>
         <NavBarUnauthenticated />
         <Outlet />
+        
       </div>
     );
   }

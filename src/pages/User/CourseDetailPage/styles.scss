@@ -1,0 +1,122 @@
+$primary-color: #f06001;
+$secondary-color: #2ca396;
+$primary-text-color: #002337;
+$secondary-text-color: #80868b;
+
+.course-container {
+  margin-top: 6rem;
+  .course-left {
+    padding-right: 2rem;
+    .course-preview {
+      .course-author {
+        .course-author-img {
+          border-radius: 50%;
+          margin-right: 1.5rem;
+        }
+        .course-author-by {
+          font-size: 1.2rem;
+          font-weight: 700;
+          color: $secondary-text-color;
+          margin-right: 0.6rem;
+        }
+
+        .course-author-name {
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: $secondary-color;
+        }
+      }
+
+      .course-title {
+        margin: 1.2rem 0;
+        h1 {
+          font-size: 3rem;
+          font-weight: 900;
+          color: $primary-text-color;
+        }
+      }
+
+      .course-category {
+        font-size: 1rem;
+        text-align: end;
+        text-transform: uppercase;
+        font-weight: 600;
+        float: left;
+
+        .course-category-text {
+          background-color: #2ca396;
+          color: white;
+          padding: 0.5rem 0.8rem;
+        }
+      }
+
+      .course-img {
+        img {
+          width: 100%;
+          height: 450px;
+        }
+      }
+    }
+
+    .course-content {
+      margin: 2rem 0;
+      .course-content-tab {
+        background-color: #f0f0f1;
+        padding: 1rem 2rem;
+        text-align: center;
+        .course-content-tab-title {
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: $secondary-text-color;
+          margin: 1.5rem 0;
+        }
+      }
+
+      .course-content-description {
+        padding: 1.5rem;
+        border: 0.01rem solid #f0f0f1;
+
+        .course-content-description-text {
+          font-size: 1.2rem;
+          font-weight: 400;
+          color: $secondary-text-color;
+          margin: 1.5rem 0;
+        }
+      }
+    }
+  }
+
+  .course-right {
+    .course-price {
+      background-color: #f0f0f1;
+      text-align: center;
+      .course-price-text {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: $secondary-text-color;
+        padding-top: 2rem;
+        letter-spacing: 0.2rem;
+      }
+      .course-price-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: $primary-text-color;
+        margin-bottom: 1rem;
+      }
+
+      .course-price-btn {
+        padding: 0rem 2rem;
+        padding-bottom: 1rem;
+        .generic-btn {
+          color: #f0f0f1;
+          background-color: #f06001;
+
+          &:hover {
+            color: #002337;
+            background-color: white;
+          }
+        }
+      }
+    }
+  }
+}

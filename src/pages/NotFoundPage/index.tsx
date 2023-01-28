@@ -1,15 +1,34 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./style.scss";
 
 export default function NotFoundPage() {
+  const navigate = useNavigate();
+
   return (
-    <div className="row vh-100 d-flex page-container align-items-center">
-      <div className="col">
-        <h2 className="heading">404 NOT FOUND</h2>
-        <NavLink className="subheading" to={"/"}>
-          Go Home
-        </NavLink>
+    <div className="flex-container">
+      <div className="text-center">
+        <h1>
+          <span className="fade-in" id="digit1">
+            4
+          </span>
+          <span className="fade-in" id="digit2">
+            0
+          </span>
+          <span className="fade-in" id="digit3">
+            4
+          </span>
+        </h1>
+        <h3 className="fadeIn">PAGE NOT FOUND</h3>
+        <button
+          onClick={() => {
+            navigate("/");
+          }}
+          type="button"
+          name="button"
+        >
+          Return To Home
+        </button>
       </div>
     </div>
   );

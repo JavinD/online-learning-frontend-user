@@ -4,22 +4,25 @@ import {
   createSlice,
   ThunkDispatch,
 } from "@reduxjs/toolkit";
-import { ICourse, ICourseRequest } from "../../../interfaces";
+import { IUserCourse, IUserCourseRequest } from "../../../../interfaces";
 
-export interface ICourseDetailState {
-  course: ICourse | undefined;
+export interface IUserCourseState {
+  course: IUserCourse | undefined;
   courseError: string | null;
   courseLoading: boolean;
 }
 
-export const fetchCourse = createAsyncThunk<
-  ICourse,
-  ICourseRequest,
+export const fetchUserCourse = createAsyncThunk<
+  IUserCourse,
+  IUserCourseRequest,
   { rejectValue: string }
->("FETCH_COURSE", ({ token, slug }, { rejectWithValue }) => {
-  const API_URL_COURSE = process.env.REACT_APP_API_URl_AUTH + "/course";
+>("FETCH_COURSE", ({ token, id }, { rejectWithValue }) => {
+  const API_URL_USER_COURSE =
+    process.env.REACT_APP_API_URl_AUTH_USER + "/course";
 
-  return fetch(API_URL_COURSE + "/" + slug, {
+  const idString = id?.toString();
+
+  return fetch(API_URL_USER_COURSE + "/" + idString, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -27,7 +30,7 @@ export const fetchCourse = createAsyncThunk<
     },
   })
     .then((response) => {
-      if (!response.ok) throw new Error("failed to fetch course details");
+      if (!response.ok) throw new Error("failed to fetch user course");
       return response.json();
     })
     .then((data) => {
@@ -38,24 +41,24 @@ export const fetchCourse = createAsyncThunk<
     });
 });
 
-const initialState: ICourseDetailState = {
+const initialState: IUserCourseState = {
   courseError: null,
   courseLoading: false,
   course: undefined,
 };
 
-export const courseDetailSlice = createSlice({
-  name: "course detail",
+export const userCourseSlice = createSlice({
+  name: "user course",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchCourse.fulfilled, (state, { payload }) => {
+    builder.addCase(fetchUserCourse.fulfilled, (state, { payload }) => {
       return { ...state, course: payload, courseLoading: false };
     });
-    builder.addCase(fetchCourse.pending, (state) => {
+    builder.addCase(fetchUserCourse.pending, (state) => {
       return { ...state, courseError: null, courseLoading: true };
     });
-    builder.addCase(fetchCourse.rejected, (state, { payload }) => {
+    builder.addCase(fetchUserCourse.rejected, (state, { payload }) => {
       return payload
         ? { ...state, courseError: payload, courseLoading: false }
         : {
@@ -67,5 +70,5 @@ export const courseDetailSlice = createSlice({
   },
 });
 
-export default courseDetailSlice.reducer;
-export type CourseDetailDispatch = ThunkDispatch<ICourse, any, AnyAction>;
+export default userCourseSlice.reducer;
+export type UserCourseDispatch = ThunkDispatch<IUserCourse, any, AnyAction>;

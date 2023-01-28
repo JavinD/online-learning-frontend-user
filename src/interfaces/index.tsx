@@ -74,9 +74,34 @@ export interface ICourse {
   updated_at: string;
 }
 
-export interface ICourseDetailRequest {
+export interface IUserCourse {
+  course: ICourse;
+  content: string;
+  created_at: string;
+  id: number;
+  updated_at: string;
+  user_id: number;
+  course_id: number;
+  status: string;
+}
+
+export interface IUserCourseRequest {
+  token: string;
+  id: number | undefined;
+}
+
+export interface ICourseRequest {
   token: string;
   slug: string | undefined;
+}
+
+export interface ICartItem {
+  id: number;
+  cart_id: number;
+  course_id: number;
+  created_at: string;
+  updated_at: string;
+  course: ICourse;
 }
 
 export interface ICourseDetail {

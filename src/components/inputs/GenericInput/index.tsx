@@ -24,7 +24,9 @@ export default function index({
 }: Props) {
   return (
     <div>
-      <label className="form-label auth-form-label">{label}</label>
+      {label !== "" && (
+        <label className="form-label auth-form-label">{label}</label>
+      )}
       <input
         type={type}
         style={{

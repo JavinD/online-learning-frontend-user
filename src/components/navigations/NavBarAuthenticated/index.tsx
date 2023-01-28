@@ -48,6 +48,9 @@ export default function NavBar() {
               <NavLink className="nav-link ms-lg-5" to="/my-course">
                 My Course
               </NavLink>
+              <NavLink className="nav-link ms-lg-5" to="/my-cart">
+                My Cart
+              </NavLink>
               <NavLink className="nav-link ms-lg-5" to="/profile">
                 My Profile
               </NavLink>

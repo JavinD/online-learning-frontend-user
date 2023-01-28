@@ -12,17 +12,34 @@ import {
 } from "../../../store/slices/course/courseDetailSlice";
 import NotFoundPage from "../../NotFoundPage";
 import { useCookies } from "react-cookie";
+import { toast, ToastContainer } from "react-toastify";
+import { CartDispatch, fetchCart } from "../../../store/slices/cart/cartSlice";
+import { isCourseInCart } from "../../../utils/util";
+import {
+  fetchUserCourse,
+  UserCourseDispatch,
+} from "../../../store/slices/user/course/userCourseSlice";
 
 type Props = {};
 
 export default function CourseDetailPage({}: Props) {
+  const API_URL = process.env.REACT_APP_API_URL_AUTH_USER;
+
   const { slug } = useParams();
   const { course, courseLoading } = useSelector(
     (state: RootState) => state.courseDetail
   );
+  const { course: userCourse } = useSelector(
+    (state: RootState) => state.userCourse
+  );
+  const { cart } = useSelector((state: RootState) => state.cart);
   const [cookies] = useCookies(["token"]);
+  const [isInCart, setIsInCart] = React.useState(false);
+  const [isOwned, setIsOwned] = React.useState(false);
 
   const courseDetailDispatch: CourseDetailDispatch = useDispatch();
+  const cartDispatch: CartDispatch = useDispatch();
+  const userCourseDispatch: UserCourseDispatch = useDispatch();
 
   useEffect(() => {
     courseDetailDispatch(
@@ -33,8 +50,69 @@ export default function CourseDetailPage({}: Props) {
     );
   }, [courseDetailDispatch, slug, cookies.token]);
 
+  useEffect(() => {
+    cartDispatch(fetchCart(cookies.token));
+  }, [cartDispatch, cookies.token]);
+
+  useEffect(() => {
+    userCourseDispatch(
+      fetchUserCourse({
+        token: cookies.token,
+        id: course?.id,
+      })
+    );
+  }, [userCourseDispatch, cookies.token, course?.id]);
+
+  useEffect(() => {
+    if (cart !== undefined && course !== undefined) {
+      const id = course?.id.toLocaleString();
+      if (isCourseInCart(id, cart)) {
+        setIsInCart(true);
+      }
+
+      if (userCourse !== undefined) {
+        setIsOwned(true);
+      }
+    }
+  }, [course, cart, userCourse]);
+
   const handleClick = () => {
-    console.log("click");
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + cookies.token,
+      },
+    };
+
+    const id = course?.id.toLocaleString();
+
+    fetch(API_URL + "/cart/" + id, requestOptions)
+      .then((response) => {
+        if (!response.ok) {
+          if (response.status === 404) {
+            throw new Error("Error 404: Not Found");
+          }
+          throw new Error(response.statusText);
+        }
+
+        return response.json();
+      })
+      .then((res) => {
+        setIsInCart(true);
+      })
+      .catch((error) => {
+        toast.error("Failed to process your request", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      });
   };
 
   if (courseLoading) {
@@ -44,6 +122,18 @@ export default function CourseDetailPage({}: Props) {
   return (
     <div>
       <TopBanner title={"COURSE DETAILS"} />
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
 
       <section className="container">
         <div className="row course-container ">
@@ -92,7 +182,13 @@ export default function CourseDetailPage({}: Props) {
               <div className="course-price-text">Course Price</div>
               <div className="course-price-value">Rp. {course?.price}</div>
               <div className="course-price-btn">
-                <GenericButton label="Add This Course to Cart" />
+                {isInCart ? (
+                  <GenericButton label="Already in Cart" disabled={true} />
+                ) : isOwned ? (
+                  <GenericButton label="Already Owned" disabled={true} />
+                ) : (
+                  <GenericButton label="Add to Cart" onClick={handleClick} />
+                )}
               </div>
             </div>
           </div>

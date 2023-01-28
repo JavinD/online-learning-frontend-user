@@ -1,3 +1,5 @@
+import { ICartItem, ICourse, IUserCourse } from "../interfaces";
+
 export const isAlphaNumeric = (str: string): boolean => {
   var code, i, len;
 
@@ -33,4 +35,18 @@ export const isNumber = (str: string): boolean => {
   }
 
   return !Number.isNaN(Number(str));
+};
+
+export const isCourseInCart = (
+  courseId: string,
+  cart: ICartItem[]
+): boolean => {
+  return cart.some((item) => item.course_id.toString() === courseId);
+};
+
+export const isCourseOwned = (
+  courseId: string,
+  ownedCourses: IUserCourse[]
+): boolean => {
+  return ownedCourses.some((item) => item.course_id.toString() === courseId);
 };

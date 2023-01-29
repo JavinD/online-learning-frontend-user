@@ -16,11 +16,9 @@ import CourseDetailPage from "./pages/User/CourseDetailPage";
 import { useCookies } from "react-cookie";
 import ShoppingCart from "./pages/User/ShoppingCartPage";
 import ProfilePage from "./pages/User/ProfilePage";
+import InvoicePage from "./pages/User/InvoicePage";
 
 function App() {
-  const [cookies] = useCookies(["token"]);
-
-  console.log("cookies", cookies.token);
   return (
     <div className="App">
       <Routes>
@@ -37,9 +35,12 @@ function App() {
 
           <Route element={<AuthenticatedOnlyPage />}>
             <Route path="/course/:slug" element={<CourseDetailPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/my-course" element={<HomePage />} />
-            <Route path="/my-cart" element={<ShoppingCart />} />
+            <Route path="/user">
+              <Route index path="profile" element={<ProfilePage />} />
+              <Route index path="course" element={<HomePage />} />
+              <Route index path="cart" element={<ShoppingCart />} />
+              <Route index path="invoice" element={<InvoicePage />} />
+            </Route>
           </Route>
 
           <Route path="/" element={<HomePage />} />

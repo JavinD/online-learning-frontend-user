@@ -61,7 +61,6 @@ export default function HomePage({}: Props) {
 
   const carouselInfiniteScroll = () => {
     if (trendingCourses !== undefined) {
-      console.log(trendingCourses.length, currentIndex);
       if (currentIndex === trendingCourses?.length - 1) {
         setCurrentIndex(0);
       }

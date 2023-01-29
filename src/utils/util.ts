@@ -50,3 +50,20 @@ export const isCourseOwned = (
 ): boolean => {
   return ownedCourses.some((item) => item.course_id.toString() === courseId);
 };
+
+export const toRupiah = (price: number): string => {
+  return price.toLocaleString("id-ID", {
+    style: "currency",
+    currency: "IDR",
+  });
+};
+
+export const countCartTotal = (cart: ICartItem[] | undefined): number => {
+  if (!cart) {
+    return 0;
+  }
+
+  return cart.reduce((acc, item) => {
+    return acc + item.course.price;
+  }, 0);
+};

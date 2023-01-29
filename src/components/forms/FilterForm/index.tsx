@@ -9,6 +9,7 @@ type Props = {
   handleTagChange: (newValue: any, actionMeta: any) => void;
   handleCategoryChange: (newValue: any, actionMeta: any) => void;
   handleSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSortDirChange: (newValue: any, actionMeta: any) => void;
 };
 
 export default function FilterForm({
@@ -17,7 +18,13 @@ export default function FilterForm({
   handleTagChange,
   handleCategoryChange,
   handleSearchChange,
+  handleSortDirChange,
 }: Props) {
+  const sortOptions = [
+    { id: 2, name: "Latest" },
+    { id: 1, name: "Oldest" },
+  ];
+
   return (
     <div>
       <div className="tag-input">
@@ -46,6 +53,15 @@ export default function FilterForm({
       </div>
       <div className="search-input">
         <GenericSearch handleSearchChange={handleSearchChange} />
+      </div>
+
+      <div className="sort-input">
+        <GenericSelect
+          options={sortOptions}
+          isMulti={false}
+          handleChange={handleSortDirChange}
+          placeholder="Sort"
+        />
       </div>
     </div>
   );

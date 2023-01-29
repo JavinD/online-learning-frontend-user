@@ -45,13 +45,16 @@ export default function NavBar() {
               <NavLink className="nav-link ms-lg-5" to="/course">
                 Courses
               </NavLink>
-              <NavLink className="nav-link ms-lg-5" to="/my-course">
+              <NavLink className="nav-link ms-lg-5" to="/user/course">
                 My Course
               </NavLink>
-              <NavLink className="nav-link ms-lg-5" to="/my-cart">
+              <NavLink className="nav-link ms-lg-5" to="/user/cart">
                 My Cart
               </NavLink>
-              <NavLink className="nav-link ms-lg-5" to="/profile">
+              <NavLink className="nav-link ms-lg-5" to="/user/invoice">
+                My Invoice
+              </NavLink>
+              <NavLink className="nav-link ms-lg-5" to="/user/profile">
                 My Profile
               </NavLink>
 

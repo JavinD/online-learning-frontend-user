@@ -10,12 +10,7 @@ export default function AuthenticatedOnlyPage() {
   const isMyTokenExpired = isExpired(cookies.token);
   // if not auth then redirect to login page
 
-  console.log(
-    "decodedToken",
-    decodedToken,
-    "isMyTokenExpired",
-    isMyTokenExpired
-  );
+  
   if (decodedToken === null || isMyTokenExpired === true) {
     return <Navigate to="user-login" replace state={{ from: location }} />;
     // TODO Add location and replace from react router

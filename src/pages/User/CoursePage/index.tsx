@@ -10,7 +10,7 @@ import { RootState } from "../../../store";
 import { fetchCategories } from "../../../store/slices/course/category/categorySlice";
 import {
   CourseDispatch,
-  fetchCourses
+  fetchCourses,
 } from "../../../store/slices/course/courseSlice";
 import { fetchTags } from "../../../store/slices/course/tag/tagSlice";
 
@@ -26,6 +26,7 @@ export default function CoursePage({}: Props) {
   const [currentTags, setCurrentTags] = useState<string>("");
   const [currentCategory, setCurrentCategory] = useState<string>("");
   const [currentSearch, setCurrentSearch] = useState<string>("");
+  const [currentSortDir, setCurrentSortDir] = useState<string>("desc");
 
   const courseDispatch: CourseDispatch = useDispatch();
   const tagDispatch: CourseDispatch = useDispatch();
@@ -46,7 +47,7 @@ export default function CoursePage({}: Props) {
       search: debouncedSearch,
       size: 6,
       sortBy: "",
-      sortDir: "",
+      sortDir: currentSortDir,
       last: "",
       tags: currentTags,
       category: currentCategory,
@@ -58,6 +59,7 @@ export default function CoursePage({}: Props) {
     currentTags,
     currentCategory,
     debouncedSearch,
+    currentSortDir,
   ]);
 
   useEffect(() => {
@@ -100,6 +102,15 @@ export default function CoursePage({}: Props) {
     setPageNumber(1);
   };
 
+  const handleSortDirChange = (newValue: any, actionMeta: any) => {
+    if (newValue.value === "1") {
+      setCurrentSortDir("asc");
+    } else {
+      setCurrentSortDir("desc");
+    }
+    setPageNumber(1);
+  };
+
   return (
     <div>
       <TopBanner title="COURSES" />
@@ -111,6 +122,7 @@ export default function CoursePage({}: Props) {
           handleTagChange={handleTagChange}
           handleCategoryChange={handleCategoryChange}
           handleSearchChange={handleSearchChange}
+          handleSortDirChange={handleSortDirChange}
         />
         <CourseGrids courses={courses?.data} />
         <GenericPagination

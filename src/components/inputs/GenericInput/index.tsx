@@ -32,7 +32,7 @@ export default function index({
         style={{
           borderColor: error !== "" ? "red" : "",
         }}
-        className="form-control auth-form-control"
+        className="form-control auth-form-control cart-form-control"
         id="exampleInputPassword1"
         value={value}
         onChange={onChange}

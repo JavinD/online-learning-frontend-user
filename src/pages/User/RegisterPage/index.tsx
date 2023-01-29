@@ -187,7 +187,7 @@ export default function RegisterPage() {
       body: JSON.stringify(convert(data)),
     };
 
-    console.log(requestOptions.body);
+  
 
     fetch(API_URL + "/register", requestOptions)
       .then((response) => {

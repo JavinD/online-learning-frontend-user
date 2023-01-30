@@ -7,6 +7,9 @@ import trendingCourseReducer from "./slices/course/trendingCourseSlice";
 import cartReducer from "./slices/cart/cartSlice";
 import tagReducer from "./slices/course/tag/tagSlice";
 import userCourseReducer from "./slices/user/course/userCourseSlice";
+import userBookmarkReducer from "./slices/user/bookmark/userBookmarkSice";
+import invoiceReducer from "./slices/user/invoice/invoiceSlice";
+import invoiceDetailReducer from "./slices/user/invoice/invoiceDetailSlice";
 import logger from "redux-logger";
 import thunk from "redux-thunk";
 
@@ -20,6 +23,9 @@ export const store = configureStore({
     tag: tagReducer,
     category: categoryReducer,
     cart: cartReducer,
+    userBookmark: userBookmarkReducer,
+    invoice: invoiceReducer,
+    invoiceDetail: invoiceDetailReducer,
   },
   middleware: [logger, thunk],
 });

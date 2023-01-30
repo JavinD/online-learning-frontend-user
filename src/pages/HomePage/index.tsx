@@ -15,35 +15,18 @@ import {
 } from "../../store/slices/course/trendingCourseSlice";
 import GenericMultiSelect from "../../components/inputs/GenericSelect";
 import CourseGrids from "../../components/course/CourseGrids";
+import CoursePage from "../User/CoursePage";
 
 type Props = {};
 
 export default function HomePage({}: Props) {
-  const { courses } = useSelector((state: RootState) => state.course);
   const { courses: trendingCourses } = useSelector(
     (state: RootState) => state.trendingCourse
   );
 
-  const [pageNumber, setPageNumber] = useState<number>(1);
-  const [pageTotal, setPageTotal] = useState<number>(1);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
-  const courseDispatch: CourseDispatch = useDispatch();
   const trendingCourseDispatch: TrendingCourseDispatch = useDispatch();
-
-  useEffect(() => {
-    const request: IFilterRequest = {
-      page: pageNumber,
-      search: "",
-      size: 10,
-      sortBy: "",
-      sortDir: "",
-      last: "",
-      tags: "",
-      category: "",
-    };
-    courseDispatch(fetchCourses(request));
-  }, [courseDispatch, pageNumber]);
 
   useEffect(() => {
     const request: IFilterRequest = {
@@ -55,8 +38,10 @@ export default function HomePage({}: Props) {
       last: "",
       tags: "",
       category: "",
+      status: "",
+      token: "",
     };
-    trendingCourseDispatch(fetchTrendingCourses(request));
+    trendingCourseDispatch(fetchTrendingCourses());
   }, [trendingCourseDispatch]);
 
   const carouselInfiniteScroll = () => {
@@ -68,16 +53,8 @@ export default function HomePage({}: Props) {
     }
   };
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     carouselInfiniteScroll();
-  //   }, 2000);
-
-  //   return () => clearInterval(interval);
-  // });
-
   return (
-    <div>
+    <div className="vh-100">
       <br />
       <br />
       <br />
@@ -135,9 +112,7 @@ export default function HomePage({}: Props) {
           </div>
         </div>
 
-        <div className="container row trending-card-container d-flex justify-content-center">
-          <CourseGrids courses={courses?.data} />
-        </div>
+        <CoursePage Banner="none" />
       </section>
     </div>
   );

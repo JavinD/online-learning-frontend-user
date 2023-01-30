@@ -10,6 +10,8 @@ type Props = {
   name: string;
   error: string;
   required: boolean;
+  className?: string;
+  disabled?: boolean;
 };
 
 export default function index({
@@ -21,6 +23,8 @@ export default function index({
   name,
   error,
   required,
+  className,
+  disabled,
 }: Props) {
   return (
     <div>
@@ -32,12 +36,12 @@ export default function index({
         style={{
           borderColor: error !== "" ? "red" : "",
         }}
-        className="form-control auth-form-control cart-form-control"
-        id="exampleInputPassword1"
+        className={"form-control auth-form-control " + className}
         value={value}
         onChange={onChange}
         name={name}
         required={required}
+        disabled={disabled}
       />
       {error !== "" && (
         <span className="warning" role="alert">

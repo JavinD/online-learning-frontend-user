@@ -23,6 +23,8 @@ export interface IFilterRequest {
   last: string;
   tags: string;
   category: string;
+  status: string;
+  token: string;
 }
 
 export interface IPaginationResponse {
@@ -31,9 +33,14 @@ export interface IPaginationResponse {
   limit: number;
 }
 
-export interface IPagination {
+export interface ICoursePagination {
   pagination_response: IPaginationResponse;
   data: ICourse[];
+}
+
+export interface IInvoicePagination {
+  pagination_response: IPaginationResponse;
+  data: IInvoice[];
 }
 
 export interface IUser {
@@ -69,9 +76,15 @@ export interface ICourse {
   img_url: string;
   author_name: string;
   tag: ITag[];
+  stats: ICourseStats;
   category: ICategory;
   created_at: string;
   updated_at: string;
+}
+
+export interface ICourseStats {
+  total_bookmarked: number;
+  total_finished: number;
 }
 
 export interface IUserCourse {
@@ -85,6 +98,12 @@ export interface IUserCourse {
   status: string;
 }
 
+export interface IUserBookmark {
+  course: ICourse;
+  last_bookmark_date: string;
+  status: string;
+  id: number;
+}
 export interface IUserCourseRequest {
   token: string;
   id: number | undefined;
@@ -130,4 +149,36 @@ export interface ICategory {
 export interface ITag {
   id: number;
   name: string;
+}
+
+export interface ITransaction {
+  id: number;
+  invoice_id: number;
+  course_id: number;
+  price: number;
+  course: ICourse;
+}
+
+export interface IInvoice {
+  id: number;
+  user_id: number;
+  total: number;
+  status: string;
+  voucher_code: string;
+  benefit_discount: number;
+  payment_date: string;
+  transactions: ITransaction[];
+  voucher: IVoucher;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface IVoucher {
+  voucher_code: string;
+  name: string;
+  status: string;
+  amount: number;
+  min_purchase: number;
+  created_at: string;
+  updated_at: string;
 }

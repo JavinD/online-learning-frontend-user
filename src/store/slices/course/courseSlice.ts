@@ -4,16 +4,20 @@ import {
   createSlice,
   ThunkDispatch,
 } from "@reduxjs/toolkit";
-import { ICourse, IFilterRequest, IPagination } from "../../../interfaces";
+import {
+  ICourse,
+  IFilterRequest,
+  ICoursePagination,
+} from "../../../interfaces";
 
 export interface ICourseState {
-  courses: IPagination | undefined;
+  courses: ICoursePagination | undefined;
   courseError: string | null;
   courseLoading: boolean;
 }
 
 export const fetchCourses = createAsyncThunk<
-  IPagination,
+  ICoursePagination,
   IFilterRequest,
   { rejectValue: string }
 >("FETCH_COURSES", (request, { rejectWithValue }) => {

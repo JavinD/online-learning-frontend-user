@@ -13,7 +13,6 @@ $secondary-text-color: #80868b;
   justify-content: center;
   align-items: center;
   background-color: #f0f0f1;
-  border-radius: 50%;
   font-size: 1rem;
   font-weight: 700;
 
@@ -25,18 +24,13 @@ $secondary-text-color: #80868b;
 }
 
 .page-item {
-  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 60px;
   height: 60px;
-  border: 1px solid #ccc;
-
   margin: 0 5px;
 
-  border-top-left-radius: 50%;
-  border-bottom-left-radius: 50%;
   &:hover {
     background-color: #ccc;
   }

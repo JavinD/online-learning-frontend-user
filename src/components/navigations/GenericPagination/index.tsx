@@ -7,7 +7,11 @@ type Props = {
   setPageNumber: React.Dispatch<React.SetStateAction<number>>;
 };
 
-export default function index({ pageNumber, pageTotal, setPageNumber }: Props) {
+export default function GenericPagination({
+  pageNumber,
+  pageTotal,
+  setPageNumber,
+}: Props) {
   const visiblePageItems = 3;
   let start = pageNumber;
   let end = start + visiblePageItems;

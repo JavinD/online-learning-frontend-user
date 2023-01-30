@@ -4,25 +4,25 @@ import {
   createSlice,
   ThunkDispatch,
 } from "@reduxjs/toolkit";
-import { IUserCourse, IUserCourseRequest } from "../../../../interfaces";
+import { IUserBookmark, IUserCourseRequest } from "../../../../interfaces";
 
-export interface IUserCourseState {
-  course: IUserCourse | undefined;
+export interface IUserBookmarkState {
+  course: IUserBookmark | undefined;
   courseError: string | null;
   courseLoading: boolean;
 }
 
-export const fetchUserCourse = createAsyncThunk<
-  IUserCourse,
+export const fetchUserBookmark = createAsyncThunk<
+  IUserBookmark,
   IUserCourseRequest,
   { rejectValue: string }
->("FETCH_USER_COURSE", ({ token, id }, { rejectWithValue }) => {
-  const API_URL_USER_COURSE =
-    process.env.REACT_APP_API_URL_AUTH_USER + "/course/";
+>("FETCH_USER_BOOKMARK", ({ token, id }, { rejectWithValue }) => {
+  const API_URL_USER_BOOKMARK =
+    process.env.REACT_APP_API_URL_AUTH_USER + "/bookmark";
 
   const idString = id?.toString();
 
-  return fetch(API_URL_USER_COURSE + "/" + idString, {
+  return fetch(API_URL_USER_BOOKMARK + "/" + idString, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -30,7 +30,7 @@ export const fetchUserCourse = createAsyncThunk<
     },
   })
     .then((response) => {
-      if (!response.ok) throw new Error("failed to fetch user course");
+      if (!response.ok) throw new Error("failed to fetch user bookmark");
       return response.json();
     })
     .then((data) => {
@@ -41,24 +41,24 @@ export const fetchUserCourse = createAsyncThunk<
     });
 });
 
-const initialState: IUserCourseState = {
+const initialState: IUserBookmarkState = {
   courseError: null,
   courseLoading: false,
   course: undefined,
 };
 
-export const userCourseSlice = createSlice({
-  name: "user course",
+export const userBookmarkSlice = createSlice({
+  name: "user bookmark",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchUserCourse.fulfilled, (state, { payload }) => {
+    builder.addCase(fetchUserBookmark.fulfilled, (state, { payload }) => {
       return { ...state, course: payload, courseLoading: false };
     });
-    builder.addCase(fetchUserCourse.pending, (state) => {
+    builder.addCase(fetchUserBookmark.pending, (state) => {
       return { ...state, courseError: null, courseLoading: true };
     });
-    builder.addCase(fetchUserCourse.rejected, (state, { payload }) => {
+    builder.addCase(fetchUserBookmark.rejected, (state, { payload }) => {
       return payload
         ? { ...state, courseError: payload, courseLoading: false }
         : {
@@ -70,5 +70,5 @@ export const userCourseSlice = createSlice({
   },
 });
 
-export default userCourseSlice.reducer;
-export type UserCourseDispatch = ThunkDispatch<IUserCourse, any, AnyAction>;
+export default userBookmarkSlice.reducer;
+export type UserBookmarkDispatch = ThunkDispatch<IUserBookmark, any, AnyAction>;

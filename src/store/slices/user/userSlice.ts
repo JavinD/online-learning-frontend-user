@@ -13,8 +13,8 @@ export const fetchUserDetails = createAsyncThunk<
   IUser,
   string,
   { rejectValue: string }
->("get/userdetails", (token, { rejectWithValue }) => {
-  const API_URL_USER = process.env.REACT_APP_API_URL + "/user";
+>("FETCH_USER_DETAILS", (token, { rejectWithValue }) => {
+  const API_URL_USER = process.env.REACT_APP_API_URl_AUTH + "/user";
 
   return fetch(API_URL_USER, {
     method: "GET",
@@ -28,7 +28,7 @@ export const fetchUserDetails = createAsyncThunk<
       return response.json();
     })
     .then((data) => {
-      return data.data;
+      return data;
     })
     .catch((error) => {
       return rejectWithValue(error.message);

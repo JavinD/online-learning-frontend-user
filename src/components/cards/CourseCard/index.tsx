@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { ICourse } from "../../../interfaces";
+import { trimSummary } from "../../../utils/util";
 import GenericButton from "../../buttons/GenericButton";
 import CourseCategory from "../../course/Category";
 import "./style.scss";
@@ -39,7 +40,9 @@ export default function CourseCard({ course }: Props) {
           <h5 className="card-title">{course.title}</h5>
 
           <div className="card-description">
-            <p className="card-description-text">{course.summary_desc}</p>
+            <p className="card-description-text">
+              {trimSummary(course.summary_desc)}
+            </p>
           </div>
 
           <p className="card-price">Rp. {course.price}</p>

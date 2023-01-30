@@ -1,29 +1,51 @@
 import React, { useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import GenericButton from "../../../components/buttons/GenericButton";
-import CartIcon from "../../../components/cart/CartIcon";
+
 import CartItemCard from "../../../components/cart/CartItemCard";
 import GenericInput from "../../../components/inputs/GenericInput";
+import ToastComponent from "../../../components/toast";
 import { RootState } from "../../../store";
 import { CartDispatch, fetchCart } from "../../../store/slices/cart/cartSlice";
-import { countCartTotal, toRupiah } from "../../../utils/util";
+import {
+  fetchUserDetails,
+  UserDispatch,
+} from "../../../store/slices/user/userSlice";
+import {
+  countCartTotal,
+  countTotalPrice,
+  toastFailed,
+  toastSuccess,
+  toRupiah,
+} from "../../../utils/util";
 import "./styles.scss";
 
-type Props = {};
+export default function ShoppingCart() {
+  const API_URL = process.env.REACT_APP_API_URL_AUTH_USER;
+  const navigate = useNavigate();
 
-export default function ShoppingCart({}: Props) {
   const { cart } = useSelector((state: RootState) => state.cart);
+  const { user } = useSelector((state: RootState) => state.user);
   const [cookies] = useCookies(["token"]);
   const [isVoucherUsed, setIsVoucherUsed] = React.useState(false);
   const [voucher, setVoucher] = React.useState("");
   const [total, setTotal] = React.useState(0);
+  const [discount, setDiscount] = React.useState(0);
+  const [userLevel, setUserLevel] = React.useState("newbie");
 
   const cartDispatch: CartDispatch = useDispatch();
+  const userDispatch: UserDispatch = useDispatch();
 
   const handleVoucherChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setVoucher(e.target.value);
   };
+
+  useEffect(() => {
+    userDispatch(fetchUserDetails(cookies.token));
+  }, [userDispatch, cookies.token]);
 
   useEffect(() => {
     cartDispatch(fetchCart(cookies.token));
@@ -31,11 +53,81 @@ export default function ShoppingCart({}: Props) {
 
   useEffect(() => {
     setTotal(countCartTotal(cart));
-  }, [cart]);
+    if (user?.level) {
+      setUserLevel(user?.level.name);
+      setDiscount(user?.level.discount_percent);
+    }
+  }, [cart, user, total]);
+
+  const handleRemoveItem = (courseId: string) => {
+    const requestOptions = {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + cookies.token,
+      },
+    };
+
+    fetch(API_URL + "/cart/" + courseId, requestOptions)
+      .then((response) => {
+        if (!response.ok) {
+          if (response.status === 404) {
+            throw new Error("Error 404: Not Found");
+          }
+          throw new Error(response.statusText);
+        }
+
+        return response.json();
+      })
+      .then((res) => {
+        toastSuccess("Item removed from cart");
+        window.location.reload();
+        return;
+      })
+      .catch((error) => {
+        toastFailed("Failed to process your request");
+      });
+  };
+
+  const handleCheckout: React.FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + cookies.token,
+      },
+      body: JSON.stringify({ voucher_code: "" }),
+    };
+
+    if (voucher !== "") {
+      requestOptions.body = JSON.stringify({ voucher_code: voucher });
+    }
+
+    fetch(API_URL + "/invoice", requestOptions)
+      .then((response) => {
+        if (!response.ok) {
+          if (response.status === 404) {
+            throw new Error("Error 404: Not Found");
+          }
+          throw new Error(response.statusText);
+        }
+
+        return response.json();
+      })
+      .then((res) => {
+        toastSuccess("Checkout success");
+        navigate("/user/invoice/");
+      })
+      .catch((error) => {
+        toastFailed("Failed to process your request");
+      });
+  };
 
   return (
     <div>
-      <section className="h-100 h-custom" style={{ backgroundColor: "#eee" }}>
+      <ToastComponent />
+      <section className="h-100 h-custom cart-container">
         <div className="container h-100 py-5">
           <div className="row d-flex justify-content-center align-items-center h-100">
             <div className="col">
@@ -60,6 +152,7 @@ export default function ShoppingCart({}: Props) {
                         ? cart.map((item) => {
                             return (
                               <CartItemCard
+                                handleRemoveItem={handleRemoveItem}
                                 key={item.course.slug}
                                 cartItem={item}
                               />
@@ -75,13 +168,23 @@ export default function ShoppingCart({}: Props) {
                           opacity: 1,
                         }}
                       />
-                      <div className="d-flex justify-content-between px-x">
-                        <p className="fw-bold">Discount:</p>
-                        <p className="fw-bold">95$</p>
+                      <div className="d-flex justify-content-between px-x align-items-center">
+                        <p className="fw-bold">
+                          Membership Discount{" "}
+                          <span className={"level " + user?.level.name}>
+                            {userLevel} ({discount * 100}%)
+                          </span>
+                          :
+                        </p>
+                        <p className="fw-bold">
+                          - {toRupiah(discount * total)}
+                        </p>
                       </div>
                       <div className="d-flex justify-content-between p-2 mb-2 total">
                         <h5 className="fw-bold mb-0">Total:</h5>
-                        <h5 className="fw-bold mb-0">{toRupiah(total)}</h5>
+                        <h5 className="fw-bold mb-0">
+                          {toRupiah(countTotalPrice(total, discount, 0))}
+                        </h5>
                       </div>
                     </div>
                     <div className="col-lg-6 px-5 py-4">
@@ -105,22 +208,19 @@ export default function ShoppingCart({}: Props) {
                         </span>
                       </h3>
 
-                      <form className="mb-5">
+                      <form className="mb-5" onSubmit={handleCheckout}>
                         <GenericInput
                           error=""
                           formText=""
-                          label=""
+                          label="Voucher Code: "
                           name="voucher"
                           onChange={handleVoucherChange}
                           required={false}
                           type="text"
                           value={voucher}
+                          className="cart-form-control"
                         />
-                        <GenericButton label="Checkout" />
-                        <h5
-                          className="fw-bold mb-5"
-                          style={{ position: "absolute", bottom: 0 }}
-                        ></h5>
+                        <GenericButton type="submit" label="Checkout" />
                       </form>
                     </div>
                   </div>

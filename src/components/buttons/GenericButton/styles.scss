@@ -9,7 +9,7 @@ $secondary-text-color: #80868b;
   border-radius: 0;
   color: #80868b;
   background-color: #f0f0f1;
-  font-size: 1rem;
+  font-size: 1.5rem;
   font-weight: 600;
   padding: 1.2rem 1rem;
   margin: 1rem 0;
@@ -19,5 +19,8 @@ $secondary-text-color: #80868b;
   &:hover {
     background-color: $primary-color;
     color: #f0f0f1;
+  }
+  .icon {
+    margin-right: 0.5rem;
   }
 }

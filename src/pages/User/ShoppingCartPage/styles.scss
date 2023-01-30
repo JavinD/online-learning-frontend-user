@@ -1,7 +1,16 @@
+$primary-color: #f06001;
+$secondary-color: #2ca396;
+$primary-text-color: #002337;
+$secondary-text-color: #80868b;
+
 @media (min-width: 1025px) {
   .h-custom {
     height: 100vh !important;
   }
+}
+
+.cart-container {
+  background-color: #eee;
 }
 
 .cart-form-control {
@@ -12,6 +21,41 @@
   border-radius: 0.5rem;
   margin-bottom: 0.2rem;
   text-transform: uppercase;
+}
+
+.level {
+  background-color: #ddd;
+  border: none;
+  color: black;
+  padding: 2px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline;
+  border-radius: 16px;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+
+  border: 2px solid #ddd;
+  top: 10px;
+
+  &.junior {
+    background-color: #f06001;
+    color: white;
+    border: 2px solid #f06001;
+  }
+
+  &.senior {
+    background-color: $primary-text-color;
+    color: white;
+    border: 2px solid $primary-text-color;
+  }
+
+  &.master {
+    background-color: gold;
+    color: white;
+    border: 2px solid gold;
+  }
 }
 
 .total {

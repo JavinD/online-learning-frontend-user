@@ -18,6 +18,42 @@ $secondary-text-color: #80868b;
           text-decoration: underline;
         }
       }
+
+      .nav-item {
+        .nav-link {
+          font-size: 1.2rem;
+          font-weight: 600;
+          padding: 0.5rem 1rem;
+        }
+      }
+
+      .dropdown {
+        .dropdown-toggle {
+          color: $secondary-text-color;
+          font-size: 1.2rem;
+          font-weight: 600;
+          padding: 0.5rem 1rem;
+        }
+        .dropdown-menu {
+          background-color: white;
+          border: 0;
+          box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+          .dropdown-item {
+            color: $secondary-text-color;
+
+            padding: 0.5rem 1rem;
+            &:hover {
+              background-color: $secondary-color;
+              color: white;
+            }
+
+            &.active {
+              background-color: $secondary-color;
+              color: white;
+            }
+          }
+        }
+      }
     }
   }
   .brand-text {

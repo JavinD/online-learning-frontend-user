@@ -7,7 +7,8 @@ import { ITag } from "../../../interfaces";
 const animatedComponents = makeAnimated();
 
 type Props = {
-  options: { id: number; name: string }[];
+  options?: { id: number; name: string }[];
+  defaultOptions?: { value: string; label: string }[];
   isMulti: boolean;
   handleChange: (newValue: any, actionMeta: any) => void;
   placeholder: string;
@@ -18,22 +19,25 @@ export default function GenericSelect({
   isMulti,
   handleChange,
   placeholder,
+  defaultOptions,
 }: Props) {
   const createOption = (id: number, name: string) => ({
     label: name,
     value: id.toString(),
   });
 
-  const newOptions = options.map((option) =>
-    createOption(option.id, option.name)
-  );
+  let newOptions: { label: string; value: string }[] = [];
+
+  if (options) {
+    newOptions = options.map((option) => createOption(option.id, option.name));
+  }
 
   return (
     <Select
       closeMenuOnSelect={false}
       components={animatedComponents}
       isMulti={isMulti}
-      options={newOptions}
+      options={defaultOptions ? defaultOptions : newOptions}
       onChange={handleChange}
       isClearable
       placeholder={placeholder}

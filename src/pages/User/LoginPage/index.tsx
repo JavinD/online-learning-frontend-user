@@ -1,10 +1,11 @@
 import { ChangeEventHandler, FormEventHandler, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LoginForm from "../../../components/forms/LoginForm";
+import ToastComponent from "../../../components/toast";
 import { LoginRequest } from "../../../interfaces";
+import { toastFailed } from "../../../utils/util";
 import "./style.scss";
 
 export default function LoginPage() {
@@ -80,35 +81,13 @@ export default function LoginPage() {
         navigate("/");
       })
       .catch((error) => {
-        let errorMessage = error.message;
-
-        toast.error(errorMessage, {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toastFailed("Invalid email, username or password");
       });
   };
 
   return (
     <div className="row vh-100">
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
+      <ToastComponent />
       <div className="col-xl-6 d-flex flex-column justify-content-center login-hero">
         <div className="login-hero-box">
           <div className="login-hero-text">

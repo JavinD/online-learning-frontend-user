@@ -4,7 +4,7 @@ import {
   createSlice,
   ThunkDispatch,
 } from "@reduxjs/toolkit";
-import { ICourse, IFilterRequest, IPagination } from "../../../interfaces";
+import { ICourse } from "../../../interfaces";
 
 export interface ICourseState {
   courses: ICourse[] | undefined;
@@ -14,7 +14,7 @@ export interface ICourseState {
 
 export const fetchTrendingCourses = createAsyncThunk<
   ICourse[],
-  IFilterRequest,
+  void,
   { rejectValue: string }
 >("FETCH_TRENDING_COURSES", (request, { rejectWithValue }) => {
   const API_URL_COURSE_TRENDING =
@@ -27,7 +27,7 @@ export const fetchTrendingCourses = createAsyncThunk<
     },
   })
     .then((response) => {
-      if (!response.ok) throw new Error("failed to fetch courses");
+      if (!response.ok) throw new Error("failed to fetch trending courses");
       return response.json();
     })
     .then((data) => {

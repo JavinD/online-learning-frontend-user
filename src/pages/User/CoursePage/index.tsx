@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CourseGrids from "../../../components/course/CourseGrids";
-import FilterForm from "../../../components/forms/FilterForm";
+import FilterForm from "../../../components/forms/CourseFilterForm";
 import TopBanner from "../../../components/heroes/TopBanner";
 import GenericPagination from "../../../components/navigations/GenericPagination";
 import useDebounce from "../../../hooks/useDebounce";
@@ -14,9 +14,11 @@ import {
 } from "../../../store/slices/course/courseSlice";
 import { fetchTags } from "../../../store/slices/course/tag/tagSlice";
 
-type Props = {};
+type Props = {
+  Banner?: string;
+};
 
-export default function CoursePage({}: Props) {
+export default function CoursePage({ Banner }: Props) {
   const { courses } = useSelector((state: RootState) => state.course);
   const { tags } = useSelector((state: RootState) => state.tag);
   const { categories } = useSelector((state: RootState) => state.category);
@@ -51,6 +53,8 @@ export default function CoursePage({}: Props) {
       last: "",
       tags: currentTags,
       category: currentCategory,
+      status: "",
+      token: "",
     };
     courseDispatch(fetchCourses(request));
   }, [
@@ -113,24 +117,22 @@ export default function CoursePage({}: Props) {
 
   return (
     <div>
-      <TopBanner title="COURSES" />
+      {!Banner ? <TopBanner title="COURSES" /> : null}
 
-      <section>
-        <FilterForm
-          tags={tags}
-          categories={categories}
-          handleTagChange={handleTagChange}
-          handleCategoryChange={handleCategoryChange}
-          handleSearchChange={handleSearchChange}
-          handleSortDirChange={handleSortDirChange}
-        />
-        <CourseGrids courses={courses?.data} />
-        <GenericPagination
-          pageNumber={pageNumber}
-          pageTotal={pageTotal}
-          setPageNumber={setPageNumber}
-        />
-      </section>
+      <FilterForm
+        tags={tags}
+        categories={categories}
+        handleTagChange={handleTagChange}
+        handleCategoryChange={handleCategoryChange}
+        handleSearchChange={handleSearchChange}
+        handleSortDirChange={handleSortDirChange}
+      />
+      <CourseGrids courses={courses?.data} />
+      <GenericPagination
+        pageNumber={pageNumber}
+        pageTotal={pageTotal}
+        setPageNumber={setPageNumber}
+      />
     </div>
   );
 }

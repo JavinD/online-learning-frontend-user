@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { ICartItem, ICourse, IUserCourse } from "../interfaces";
 
 export const isAlphaNumeric = (str: string): boolean => {
@@ -66,4 +67,71 @@ export const countCartTotal = (cart: ICartItem[] | undefined): number => {
   return cart.reduce((acc, item) => {
     return acc + item.course.price;
   }, 0);
+};
+
+export const countTotalPrice = (
+  price: number,
+  discount: number,
+  voucher: number
+): number => {
+  const total = price - price * discount - voucher;
+
+  if (total < 0) {
+    return 0;
+  }
+
+  return total;
+};
+
+export const toastSuccess = (message: string) => {
+  toast.success(message, {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
+
+export const toastFailed = (message: string) => {
+  toast.error(message, {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
+
+export const trimSummary = (str: string): string => {
+  const length = 53;
+
+  if (str.length > length) {
+    return str.substring(0, length) + "...";
+  }
+
+  return str;
+};
+
+export const toDate = (str: string | undefined) => {
+  if (str === undefined) {
+    return "";
+  }
+  const date = new Date(str);
+  return (
+    date.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    }) +
+    " - " +
+    date.getDate() +
+    " " +
+    date.toLocaleString("default", { month: "long" }) +
+    " " +
+    date.getFullYear()
+  );
 };

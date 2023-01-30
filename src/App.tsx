@@ -1,6 +1,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.scss";
+import "bootstrap/dist/js/bootstrap.bundle.min";
 import { Routes, Route } from "react-router-dom";
 import DashboardPage from "./pages/Admin/DashboardPage";
 import NotFoundPage from "./pages/NotFoundPage";
@@ -13,10 +14,11 @@ import RegisterPage from "./pages/User/RegisterPage";
 import CoursePage from "./pages/User/CoursePage";
 import AuthenticatedOnlyPage from "./pages/AuthenticatedOnlyPage";
 import CourseDetailPage from "./pages/User/CourseDetailPage";
-import { useCookies } from "react-cookie";
 import ShoppingCart from "./pages/User/ShoppingCartPage";
 import ProfilePage from "./pages/User/ProfilePage";
 import InvoicePage from "./pages/User/InvoicePage";
+import InvoiceDetailPage from "./pages/User/InvoiceDetailPage";
+import InvoicePayPage from "./pages/User/InvoicePayPage";
 
 function App() {
   return (
@@ -37,9 +39,13 @@ function App() {
             <Route path="/course/:slug" element={<CourseDetailPage />} />
             <Route path="/user">
               <Route index path="profile" element={<ProfilePage />} />
-              <Route index path="course" element={<HomePage />} />
+              <Route path="course" element={<CoursePage />}></Route>
               <Route index path="cart" element={<ShoppingCart />} />
-              <Route index path="invoice" element={<InvoicePage />} />
+              <Route path="invoice">
+                <Route index element={<InvoicePage />} />
+                <Route path=":id" element={<InvoiceDetailPage />} />
+                <Route path=":id/pay" element={<InvoicePayPage />} />
+              </Route>
             </Route>
           </Route>
 

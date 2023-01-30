@@ -1,12 +1,17 @@
-import React, { ChangeEventHandler, FormEventHandler, useState } from "react";
+import { ChangeEventHandler, FormEventHandler, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
-import { RegisterRequest } from "../../../interfaces";
 import "react-toastify/dist/ReactToastify.css";
-import "./style.scss";
 import RegisterForm from "../../../components/forms/RegisterForm";
-import { isAlphaNumeric, isNumber, validateEmail } from "../../../utils/util";
+import ToastComponent from "../../../components/toast";
+import { RegisterRequest } from "../../../interfaces";
+import {
+  isAlphaNumeric,
+  isNumber,
+  toastFailed,
+  validateEmail
+} from "../../../utils/util";
+import "./style.scss";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -187,8 +192,6 @@ export default function RegisterPage() {
       body: JSON.stringify(convert(data)),
     };
 
-  
-
     fetch(API_URL + "/register", requestOptions)
       .then((response) => {
         if (!response.ok) {
@@ -208,34 +211,13 @@ export default function RegisterPage() {
         navigate("/user-login");
       })
       .catch((error) => {
-        let errorMessage = error.message;
-        toast.error(errorMessage, {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toastFailed(error.message);
       });
   };
 
   return (
     <div className="row vh-100 gap-5">
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
+      <ToastComponent />
       <div className="col-xl-5 d-flex flex-column justify-content-center login-hero">
         <div className="login-hero-box">
           <div className="login-hero-text">

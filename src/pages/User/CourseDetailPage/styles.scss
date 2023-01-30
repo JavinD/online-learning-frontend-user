@@ -118,5 +118,42 @@ $secondary-text-color: #80868b;
         }
       }
     }
+
+    .course-bookmark {
+      margin-top: 3rem;
+      background-color: #f0f0f1;
+      text-align: center;
+      .course-bookmark-text {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: $secondary-text-color;
+        padding-top: 2rem;
+        letter-spacing: 0.2rem;
+      }
+
+      .course-bookmark-btn {
+        padding: 0rem 2rem;
+        padding-bottom: 1rem;
+        .generic-btn {
+          color: #f0f0f1;
+          background-color: #f06001;
+
+          &:hover {
+            color: #002337;
+            background-color: white;
+          }
+        }
+      }
+    }
   }
+}
+
+.bookmark-icon {
+  margin: 1rem;
+  font-size: 2rem;
+  color: #f06001;
+  cursor: pointer;
+  z-index: 1;
+  width: 100px;
+  height: 100px;
 }

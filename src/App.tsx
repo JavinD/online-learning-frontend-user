@@ -19,6 +19,8 @@ import ProfilePage from "./pages/User/ProfilePage";
 import InvoicePage from "./pages/User/InvoicePage";
 import InvoiceDetailPage from "./pages/User/InvoiceDetailPage";
 import InvoicePayPage from "./pages/User/InvoicePayPage";
+import MyFavoritePage from "./pages/User/MyFavoritePage";
+import MyCoursePage from "./pages/User/MyCoursePage";
 
 function App() {
   return (
@@ -39,7 +41,8 @@ function App() {
             <Route path="/course/:slug" element={<CourseDetailPage />} />
             <Route path="/user">
               <Route index path="profile" element={<ProfilePage />} />
-              <Route path="course" element={<CoursePage />}></Route>
+              <Route path="course" element={<MyCoursePage />} />
+              <Route path="favorite" element={<MyFavoritePage />} />
               <Route index path="cart" element={<ShoppingCart />} />
               <Route path="invoice">
                 <Route index element={<InvoicePage />} />

@@ -59,8 +59,8 @@ export const categorySlice = createSlice({
         ? { ...state, categoryError: payload, categoryLoading: false }
         : {
             ...state,
-            tagError: "unknown error",
-            tagLoading: false,
+            categoryError: "unknown error",
+            categoryLoading: false,
           };
     });
   },

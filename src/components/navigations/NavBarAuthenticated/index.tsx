@@ -1,12 +1,14 @@
 import React, { MouseEventHandler, useEffect, useRef } from "react";
-import { Navigate, NavLink, useNavigate } from "react-router-dom";
-import "./style.scss";
 import { useCookies } from "react-cookie";
-import heart from "../../../assets/heart.svg";
-import { chooseBadgeByLevel } from "../../../assets/badges";
 import { useDispatch, useSelector } from "react-redux";
+import { NavLink, useNavigate } from "react-router-dom";
+import { chooseBadgeByLevel } from "../../../assets/badges";
 import { RootState } from "../../../store";
-import { UserDispatch } from "../../../store/slices/user/userSlice";
+import {
+  fetchUserDetails,
+  UserDispatch,
+} from "../../../store/slices/user/userSlice";
+import "./style.scss";
 
 export default function NavBar() {
   const [cookies, removeCookie] = useCookies(["token"]);
@@ -18,9 +20,13 @@ export default function NavBar() {
 
   useEffect(() => {
     if (user?.level) {
-      level.current = user?.level.id;
+      level.current = user?.level_id;
     }
   }, [user]);
+
+  useEffect(() => {
+    userDispatch(fetchUserDetails(cookies.token));
+  }, [userDispatch, cookies.token]);
 
   const logOut: MouseEventHandler<HTMLAnchorElement> = (e) => {
     e.preventDefault();
@@ -76,7 +82,12 @@ export default function NavBar() {
                 >
                   <li>
                     <NavLink className="dropdown-item" to="/user/course">
-                      My Course
+                      My Courses
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink className="dropdown-item" to="/user/favorite">
+                      My Favorites
                     </NavLink>
                   </li>
                   <li>
@@ -86,7 +97,7 @@ export default function NavBar() {
                   </li>
                   <li>
                     <NavLink className="dropdown-item" to="/user/invoice">
-                      My Invoice
+                      My Invoices
                     </NavLink>
                   </li>
                   <li>
@@ -108,27 +119,6 @@ export default function NavBar() {
                   </li>
                 </ul>
               </div>
-              {/* end navbar dropdown user */}
-              {/* <NavLink className="nav-link ms-lg-5" to="/user/course">
-                My Course
-              </NavLink>
-              <NavLink className="nav-link ms-lg-5" to="/user/cart">
-                My Cart
-              </NavLink>
-              <NavLink className="nav-link ms-lg-5" to="/user/invoice">
-                My Invoice
-              </NavLink>
-              <NavLink className="nav-link ms-lg-5" to="/user/profile">
-                My Profile
-              </NavLink>
-
-              <NavLink
-                onClick={logOut}
-                className="nav-link ms-lg-5"
-                to="/user-login"
-              >
-                Logout
-              </NavLink> */}
             </div>
           </div>
         </div>

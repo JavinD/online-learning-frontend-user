@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { IInvoicePagination } from "../../../interfaces";
 import { toDate, toRupiah } from "../../../utils/util";
+import TableItem from "../TableItem";
 import "./styles.scss";
 
 type Props = {
@@ -63,33 +64,39 @@ export default function InvoiceTable({ invoices }: Props) {
                     return (
                       <tr key={invoice.id}>
                         <th scope="row">{index + 1}</th>
-                        <td>{invoice.id}</td>
-                        <td>{toRupiah(invoice.total)}</td>
-                        <td>{toDate(invoice.created_at)}</td>
-                        <td>
-                          {invoice.payment_date
-                            ? toDate(invoice.payment_date)
-                            : "-"}
-                        </td>
-                        <td>
-                          <span
-                            className={`badge ${chooseClassForStatus(
-                              invoice.status
-                            )}`}
-                          >
-                            {parseStatus(invoice.status)}
-                          </span>
-                        </td>
-                        <td>
-                          <button
-                            onClick={() => {
-                              navigate(`/user/invoice/${invoice.id}`);
-                            }}
-                            className="btn btn-sm btn-primary"
-                          >
-                            Details
-                          </button>
-                        </td>
+                        <TableItem child={invoice.id} />
+                        <TableItem child={toRupiah(invoice.total)} />
+                        <TableItem child={toDate(invoice.created_at)} />
+                        <TableItem
+                          child={
+                            invoice.payment_date
+                              ? toDate(invoice.payment_date)
+                              : "-"
+                          }
+                        />
+                        <TableItem
+                          child={
+                            <span
+                              className={`badge ${chooseClassForStatus(
+                                invoice.status
+                              )}`}
+                            >
+                              {parseStatus(invoice.status)}
+                            </span>
+                          }
+                        />
+                        <TableItem
+                          child={
+                            <button
+                              onClick={() => {
+                                navigate(`/user/invoice/${invoice.id}`);
+                              }}
+                              className="btn btn-sm btn-primary"
+                            >
+                              Details
+                            </button>
+                          }
+                        />
                       </tr>
                     );
                   })}

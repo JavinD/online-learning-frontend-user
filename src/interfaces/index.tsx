@@ -43,6 +43,16 @@ export interface IInvoicePagination {
   data: IInvoice[];
 }
 
+export interface IUserCoursePagination {
+  pagination_response: IPaginationResponse;
+  data: IUserCourse[];
+}
+
+export interface IUserBookmarkPagination {
+  pagination_response: IPaginationResponse;
+  data: IUserBookmark[];
+}
+
 export interface IUser {
   id: number;
   username: string;
@@ -136,6 +146,7 @@ export interface ICourseDetail {
   img_thumbnail: string;
   author_name: string;
   tag: ITag[];
+  stats: ICourseStats;
   category: ICategory;
   created_at: string;
   updated_at: string;

@@ -4,16 +4,16 @@ import {
   createSlice,
   ThunkDispatch,
 } from "@reduxjs/toolkit";
-import { ICourse, ICourseRequest } from "../../../interfaces";
+import { ICourseDetail, ICourseRequest } from "../../../interfaces";
 
 export interface ICourseDetailState {
-  course: ICourse | undefined;
+  course: ICourseDetail | undefined;
   courseError: string | null;
   courseLoading: boolean;
 }
 
 export const fetchCourse = createAsyncThunk<
-  ICourse,
+  ICourseDetail,
   ICourseRequest,
   { rejectValue: string }
 >("FETCH_COURSE", ({ token, slug }, { rejectWithValue }) => {
@@ -68,4 +68,4 @@ export const courseDetailSlice = createSlice({
 });
 
 export default courseDetailSlice.reducer;
-export type CourseDetailDispatch = ThunkDispatch<ICourse, any, AnyAction>;
+export type CourseDetailDispatch = ThunkDispatch<ICourseDetail, any, AnyAction>;

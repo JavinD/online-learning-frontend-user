@@ -4,31 +4,36 @@ import {
   createSlice,
   ThunkDispatch,
 } from "@reduxjs/toolkit";
-import { IUserBookmark, IUserCourseRequest } from "../../../../interfaces";
+import {
+  IFilterRequest,
+  IUserBookmarkPagination,
+} from "../../../../interfaces";
 
 export interface IUserBookmarkState {
-  course: IUserBookmark | undefined;
+  course: IUserBookmarkPagination | undefined;
   courseError: string | null;
   courseLoading: boolean;
 }
 
 export const fetchUserBookmark = createAsyncThunk<
-  IUserBookmark,
-  IUserCourseRequest,
+  IUserBookmarkPagination,
+  IFilterRequest,
   { rejectValue: string }
->("FETCH_USER_BOOKMARK", ({ token, id }, { rejectWithValue }) => {
+>("FETCH_USER_BOOKMARKS", (request, { rejectWithValue }) => {
   const API_URL_USER_BOOKMARK =
     process.env.REACT_APP_API_URL_AUTH_USER + "/bookmark";
 
-  const idString = id?.toString();
-
-  return fetch(API_URL_USER_BOOKMARK + "/" + idString, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-  })
+  return fetch(
+    API_URL_USER_BOOKMARK +
+      `?page=${request.page}&sortBy=${request.sortBy}&sortDir=${request.sortDir}&search=${request.search}&limit=${request.size}&tag=${request.tags}&category=${request.category}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + request.token,
+      },
+    }
+  )
     .then((response) => {
       if (!response.ok) throw new Error("failed to fetch user bookmark");
       return response.json();
@@ -71,4 +76,8 @@ export const userBookmarkSlice = createSlice({
 });
 
 export default userBookmarkSlice.reducer;
-export type UserBookmarkDispatch = ThunkDispatch<IUserBookmark, any, AnyAction>;
+export type UserBookmarkDispatch = ThunkDispatch<
+  IUserBookmarkPagination,
+  any,
+  AnyAction
+>;

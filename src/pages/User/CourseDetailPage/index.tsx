@@ -13,13 +13,13 @@ import {
   fetchCourse,
 } from "../../../store/slices/course/courseDetailSlice";
 import {
-  fetchUserCourse,
-  UserCourseDispatch,
-} from "../../../store/slices/user/course/userCourseSlice";
+  fetchUserCourseDetail,
+  UserCourseDetailDispatch,
+} from "../../../store/slices/user/course/userCourseDetailSlice";
 import {
-  fetchUserBookmark,
-  UserBookmarkDispatch,
-} from "../../../store/slices/user/bookmark/userBookmarkSice";
+  fetchUserBookmarkDetail,
+  UserBookmarkDetailDispatch,
+} from "../../../store/slices/user/bookmark/userBookmarkDetailSlice";
 import { isCourseInCart, toastFailed, toastSuccess } from "../../../utils/util";
 import heartIcon from "../../../assets/heart.svg";
 import "./styles.scss";
@@ -38,10 +38,10 @@ export default function CourseDetailPage() {
     (state: RootState) => state.courseDetail
   );
   const { course: userCourse } = useSelector(
-    (state: RootState) => state.userCourse
+    (state: RootState) => state.userCourseDetail
   );
   const { course: userBookmark } = useSelector(
-    (state: RootState) => state.userBookmark
+    (state: RootState) => state.userBookmarkDetail
   );
   const { cart } = useSelector((state: RootState) => state.cart);
   const [cookies] = useCookies(["token"]);
@@ -51,8 +51,8 @@ export default function CourseDetailPage() {
 
   const courseDetailDispatch: CourseDetailDispatch = useDispatch();
   const cartDispatch: CartDispatch = useDispatch();
-  const userCourseDispatch: UserCourseDispatch = useDispatch();
-  const userBookmarkDispatch: UserBookmarkDispatch = useDispatch();
+  const userCourseDetailDispatch: UserCourseDetailDispatch = useDispatch();
+  const userBookmarkDetailDispatch: UserBookmarkDetailDispatch = useDispatch();
 
   useEffect(() => {
     courseDetailDispatch(
@@ -68,22 +68,22 @@ export default function CourseDetailPage() {
   }, [cartDispatch, cookies.token]);
 
   useEffect(() => {
-    userCourseDispatch(
-      fetchUserCourse({
+    userCourseDetailDispatch(
+      fetchUserCourseDetail({
         token: cookies.token,
         id: course?.id,
       })
     );
-  }, [userCourseDispatch, cookies.token, course?.id]);
+  }, [userCourseDetailDispatch, cookies.token, course?.id]);
 
   useEffect(() => {
-    userBookmarkDispatch(
-      fetchUserBookmark({
+    userBookmarkDetailDispatch(
+      fetchUserBookmarkDetail({
         token: cookies.token,
         id: course?.id,
       })
     );
-  }, [userBookmarkDispatch, cookies.token, course?.id]);
+  }, [userBookmarkDetailDispatch, cookies.token, course?.id]);
 
   useEffect(() => {
     if (cart !== undefined && course !== undefined) {
@@ -218,7 +218,7 @@ export default function CourseDetailPage() {
               </div>
               <div className="course-content-description">
                 <p className="course-content-description-text">
-                  {course?.summary_desc}
+                  {course?.content}
                 </p>
               </div>
             </div>

@@ -4,33 +4,39 @@ import {
   createSlice,
   ThunkDispatch,
 } from "@reduxjs/toolkit";
-import { IUserCourse, IUserCourseRequest } from "../../../../interfaces";
+import {
+  IFilterRequest,
+  IUserBookmarkPagination,
+  IUserCoursePagination,
+} from "../../../../interfaces";
 
 export interface IUserCourseState {
-  course: IUserCourse | undefined;
+  course: IUserCoursePagination | undefined;
   courseError: string | null;
   courseLoading: boolean;
 }
 
 export const fetchUserCourse = createAsyncThunk<
-  IUserCourse,
-  IUserCourseRequest,
+  IUserCoursePagination,
+  IFilterRequest,
   { rejectValue: string }
->("FETCH_USER_COURSE", ({ token, id }, { rejectWithValue }) => {
+>("FETCH_USER_COURSES", (request, { rejectWithValue }) => {
   const API_URL_USER_COURSE =
-    process.env.REACT_APP_API_URL_AUTH_USER + "/course/";
+    process.env.REACT_APP_API_URL_AUTH_USER + "/course";
 
-  const idString = id?.toString();
-
-  return fetch(API_URL_USER_COURSE + "/" + idString, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-  })
+  return fetch(
+    API_URL_USER_COURSE +
+      `?page=${request.page}&sortBy=${request.sortBy}&sortDir=${request.sortDir}&search=${request.search}&limit=${request.size}&tag=${request.tags}&category=${request.category}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + request.token,
+      },
+    }
+  )
     .then((response) => {
-      if (!response.ok) throw new Error("failed to fetch user course");
+      if (!response.ok) throw new Error("failed to fetch user courses");
       return response.json();
     })
     .then((data) => {
@@ -71,4 +77,8 @@ export const userCourseSlice = createSlice({
 });
 
 export default userCourseSlice.reducer;
-export type UserCourseDispatch = ThunkDispatch<IUserCourse, any, AnyAction>;
+export type UserCourseDispatch = ThunkDispatch<
+  IUserCoursePagination,
+  any,
+  AnyAction
+>;

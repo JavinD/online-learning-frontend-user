@@ -136,7 +136,7 @@ export default function MyFavoritePage() {
       />
       <CourseGrids
         courses={
-          userBookmark
+          userBookmark?.data
             ? userBookmark.data.map((item) => {
                 return item.course;
               })

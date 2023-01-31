@@ -48,6 +48,7 @@ export default function CourseDetailPage() {
   const [isInCart, setIsInCart] = React.useState(false);
   const [isOwned, setIsOwned] = React.useState(false);
   const [bookmarkState, setBookmarkState] = React.useState("active");
+  const [courseStatus, setCourseStatus] = React.useState("unbegun");
 
   const courseDetailDispatch: CourseDetailDispatch = useDispatch();
   const cartDispatch: CartDispatch = useDispatch();
@@ -94,6 +95,7 @@ export default function CourseDetailPage() {
 
       if (userCourse !== undefined) {
         setIsOwned(true);
+        setCourseStatus(userCourse.status);
       }
 
       if (userBookmark !== undefined) {
@@ -171,6 +173,56 @@ export default function CourseDetailPage() {
       });
   };
 
+  const handleCourseAction = () => {
+    let courseAction: string;
+
+    switch (courseStatus) {
+      case "unbegun":
+        courseAction = "enroll";
+        break;
+      case "enrolled":
+        courseAction = "finish";
+        break;
+      default:
+        courseAction = "";
+    }
+
+    const courseId = course?.id.toString();
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + cookies.token,
+      },
+      body: JSON.stringify({ action: courseAction }),
+    };
+
+    fetch(API_URL + "/course/" + courseId, requestOptions)
+      .then((response) => {
+        if (!response.ok) {
+          if (response.status === 404) {
+            throw new Error("Error 404: Not Found");
+          }
+          throw new Error(response.statusText);
+        }
+
+        return response.json();
+      })
+      .then((res) => {
+        userCourseDetailDispatch(
+          fetchUserCourseDetail({
+            token: cookies.token,
+            id: course?.id,
+          })
+        );
+        toastSuccess("Course " + courseAction + "ed");
+        return;
+      })
+      .catch((error) => {
+        toastFailed("Failed to " + courseAction + " course");
+      });
+  };
+
   if (courseLoading) {
     return <div>LOADING</div>;
   }
@@ -224,109 +276,190 @@ export default function CourseDetailPage() {
             </div>
           </div>
           <div className="col-xl-4 course-right">
-            <div className="course-price">
-              <div className="course-price-text">Course Price</div>
-              <div className="course-price-value">Rp. {course?.price}</div>
-              <div className="course-price-btn">
-                {isInCart ? (
-                  <GenericButton label="Already in Cart" disabled={true} />
-                ) : isOwned ? (
-                  <GenericButton label="Already Owned" disabled={true} />
-                ) : (
-                  <GenericButton
-                    icon={
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="50"
-                        height="50"
-                        fill="currentColor"
-                        className="bi bi-cart"
-                        viewBox="0 0 16 16"
-                      >
-                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />{" "}
-                      </svg>
-                    }
-                    label="Add to Cart"
-                    onClick={handleAddToCart}
-                  />
-                )}
+            {!isOwned ? (
+              <div className="course-price">
+                <div className="course-price-text">Course Price</div>
+                <div className="course-price-value">Rp. {course?.price}</div>
+                <div className="course-price-btn">
+                  {isInCart ? (
+                    <GenericButton label="Already in Cart" disabled={true} />
+                  ) : isOwned ? (
+                    <GenericButton label="Already Owned" disabled={true} />
+                  ) : (
+                    <GenericButton
+                      icon={
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="50"
+                          height="50"
+                          fill="currentColor"
+                          className="bi bi-cart"
+                          viewBox="0 0 16 16"
+                        >
+                          <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />{" "}
+                        </svg>
+                      }
+                      label="Add to Cart"
+                      onClick={handleAddToCart}
+                    />
+                  )}
+                </div>
+              </div>
+            ) : (
+              <div className="course-enroll">
+                <div className="course-enroll-btn">
+                  {courseStatus === "unbegun" ? (
+                    <GenericButton
+                      icon={
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="50"
+                          height="50"
+                          fill="currentColor"
+                          className="bi bi-play-fill"
+                          viewBox="0 0 16 16"
+                        >
+                          <path d="M0 0v16l16-8-16-8z" />
+                        </svg>
+                      }
+                      label="Start Course"
+                      onClick={handleCourseAction}
+                    />
+                  ) : courseStatus === "enrolled" ? (
+                    <GenericButton
+                      icon={
+                        // complete svg
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="50"
+                          height="50"
+                          fill="currentColor"
+                          className="bi bi-check-circle"
+                          viewBox="0 0 16 16"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm3.97-11.03a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0l-2-2a.75.75 0 1 1 1.06-1.06l1.47 1.47 3.72-3.72a.75.75 0 0 1 1.06 0z"
+                          />
+                        </svg>
+                      }
+                      label="Finish Course"
+                      onClick={handleCourseAction}
+                    />
+                  ) : (
+                    <GenericButton
+                      icon={
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="50"
+                          height="50"
+                          fill="green"
+                          className="bi bi-check-circle"
+                          viewBox="0 0 16 16"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm3.97-11.03a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0l-2-2a.75.75 0 1 1 1.06-1.06l1.47 1.47 3.72-3.72a.75.75 0 0 1 1.06 0z"
+                          />
+                        </svg>
+                      }
+                      label="Course Finished"
+                      disabled={true}
+                    />
+                  )}
+                </div>
+              </div>
+            )}
+            <div className="course-bookmark-btn">
+              {bookmarkState === "active" ? (
+                <GenericButton
+                  icon={
+                    <svg
+                      width="50px"
+                      height="50px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="pink"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12.62 20.8101C12.28 20.9301 11.72 20.9301 11.38 20.8101C8.48 19.8201 2 15.6901 2 8.6901C2 5.6001 4.49 3.1001 7.56 3.1001C9.38 3.1001 10.99 3.9801 12 5.3401C13.01 3.9801 14.63 3.1001 16.44 3.1001C19.51 3.1001 22 5.6001 22 8.6901C22 15.6901 15.52 19.8201 12.62 20.8101Z"
+                        strokeWidth="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  }
+                  label="Bookmark"
+                  onClick={handleBookmark}
+                />
+              ) : (
+                <GenericButton
+                  icon={
+                    <svg
+                      width="50px"
+                      height="50px"
+                      viewBox="0 0 24 24"
+                      fill="pink"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12.62 20.8101C12.28 20.9301 11.72 20.9301 11.38 20.8101C8.48 19.8201 2 15.6901 2 8.6901C2 5.6001 4.49 3.1001 7.56 3.1001C9.38 3.1001 10.99 3.9801 12 5.3401C13.01 3.9801 14.63 3.1001 16.44 3.1001C19.51 3.1001 22 5.6001 22 8.6901C22 15.6901 15.52 19.8201 12.62 20.8101Z"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  }
+                  label="Unbookmark"
+                  onClick={handleBookmark}
+                />
+              )}
+            </div>
+            <div className="course-share">
+              <GenericButton
+                icon={
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="50"
+                    height="50"
+                    fill="#1DA1F2"
+                    className="bi bi-twitter"
+                    viewBox="0 0 16 16"
+                  >
+                    {" "}
+                    <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z" />{" "}
+                  </svg>
+                }
+                label="Share now"
+                onClick={() => {
+                  window.open(
+                    "https://twitter.com/intent/tweet?text=" +
+                      encodeURI(shareMessage),
+                    "_blank"
+                  );
+                }}
+              />
+            </div>
+            {/* Course Stats */}
+            <div className="course-stats">
+              <div className="course-stats-container">
+                <div className="course-stats-text">Total Bookmarked</div>
+                <div className="course-stats-value">
+                  {course?.stats.total_bookmarked
+                    ? course?.stats.total_bookmarked
+                    : 0}
+                </div>
+              </div>
+              <div className="course-stats-container">
+                <div className="course-stats-text">Total Finished</div>
+                <div className="course-stats-value">
+                  {course?.stats.total_finished
+                    ? course?.stats.total_finished
+                    : 0}
+                </div>
               </div>
             </div>
-            <div className="course-bookmark">
-              <div className="course-bookmark-text">Bookmark Now</div>
-              <div className="course-bookmark-btn">
-                {bookmarkState === "active" ? (
-                  <GenericButton
-                    icon={
-                      <svg
-                        width="50px"
-                        height="50px"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M12.62 20.8101C12.28 20.9301 11.72 20.9301 11.38 20.8101C8.48 19.8201 2 15.6901 2 8.6901C2 5.6001 4.49 3.1001 7.56 3.1001C9.38 3.1001 10.99 3.9801 12 5.3401C13.01 3.9801 14.63 3.1001 16.44 3.1001C19.51 3.1001 22 5.6001 22 8.6901C22 15.6901 15.52 19.8201 12.62 20.8101Z"
-                          stroke="#f0f0f1"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                      </svg>
-                    }
-                    label="Bookmark"
-                    onClick={handleBookmark}
-                  />
-                ) : (
-                  <GenericButton
-                    icon={
-                      <svg
-                        width="50px"
-                        height="50px"
-                        viewBox="0 0 24 24"
-                        fill="#f0f0f1"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M12.62 20.8101C12.28 20.9301 11.72 20.9301 11.38 20.8101C8.48 19.8201 2 15.6901 2 8.6901C2 5.6001 4.49 3.1001 7.56 3.1001C9.38 3.1001 10.99 3.9801 12 5.3401C13.01 3.9801 14.63 3.1001 16.44 3.1001C19.51 3.1001 22 5.6001 22 8.6901C22 15.6901 15.52 19.8201 12.62 20.8101Z"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                      </svg>
-                    }
-                    label="Unbookmark"
-                    onClick={handleBookmark}
-                  />
-                )}
-              </div>
-            </div>
-            <button
-              className="btn btn-info"
-              onClick={() => {
-                window.open(
-                  "https://twitter.com/intent/tweet?text=" +
-                    encodeURI(shareMessage),
-                  "_blank"
-                );
-              }}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                className="bi bi-twitter"
-                viewBox="0 0 16 16"
-              >
-                {" "}
-                <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z" />{" "}
-              </svg>{" "}
-              Share now
-            </button>
-            total bookmarked: {course?.stats.total_bookmarked}
-            <br />
-            total finished: {course?.stats.total_finished}
           </div>
         </div>
       </section>

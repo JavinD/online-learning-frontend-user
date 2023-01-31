@@ -99,7 +99,6 @@ export interface ICourseStats {
 
 export interface IUserCourse {
   course: ICourse;
-  content: string;
   created_at: string;
   id: number;
   updated_at: string;

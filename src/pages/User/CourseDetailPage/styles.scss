@@ -145,6 +145,30 @@ $secondary-text-color: #80868b;
         }
       }
     }
+
+    .course-stats {
+      margin-top: 3rem;
+      border: 0.1rem solid #f0f0f1;
+      text-align: center;
+
+      .course-stats-container {
+        border: 0.1rem solid #f0f0f1;
+        .course-stats-text {
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: $secondary-text-color;
+          padding-top: 2rem;
+          letter-spacing: 0.2rem;
+        }
+
+        .course-stats-value {
+          font-size: 2.5rem;
+          font-weight: 700;
+          color: $primary-text-color;
+          margin-bottom: 1rem;
+        }
+      }
+    }
   }
 }
 

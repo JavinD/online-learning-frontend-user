@@ -116,12 +116,12 @@ export default function InvoiceDetailPage() {
                             <h5 className="fw-bold mb-0">
                               {invoice?.status === "awaiting_payment"
                                 ? "Waiting for payment"
-                                : invoice?.status === "finished"
+                                : invoice?.status === "completed"
                                 ? "Payment Success"
                                 : invoice?.status === "canceled"
                                 ? "Payment Canceled"
                                 : invoice?.status === "awaiting_confirmation"
-                                ? "Waiting for confirmation"
+                                ? "Waiting for payment confirmation"
                                 : "Unknown"}
                             </h5>
                           </div>

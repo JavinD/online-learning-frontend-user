@@ -4,11 +4,7 @@ import {
   createSlice,
   ThunkDispatch,
 } from "@reduxjs/toolkit";
-import {
-  IFilterRequest,
-  IUserBookmarkPagination,
-  IUserCoursePagination,
-} from "../../../../interfaces";
+import { IFilterRequest, IUserCoursePagination } from "../../../../interfaces";
 
 export interface IUserCourseState {
   course: IUserCoursePagination | undefined;

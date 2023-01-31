@@ -20,9 +20,8 @@ import {
   TagDispatch,
 } from "../../../store/slices/course/tag/tagSlice";
 import { useCookies } from "react-cookie";
-type Props = {};
 
-export default function MyCoursePage({}: Props) {
+export default function MyCoursePage() {
   const [cookies] = useCookies(["token"]);
   const { course: userCourse } = useSelector(
     (state: RootState) => state.userCourse
@@ -137,7 +136,7 @@ export default function MyCoursePage({}: Props) {
       />
       <CourseGrids
         courses={
-          userCourse
+          userCourse?.data
             ? userCourse.data.map((item) => {
                 return item.course;
               })

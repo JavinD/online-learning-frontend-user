@@ -40,7 +40,6 @@ export const fetchInvoices = createAsyncThunk<
       return response.json();
     })
     .then((data) => {
-      console.log(data, "data");
       return data;
     })
     .catch((error) => {

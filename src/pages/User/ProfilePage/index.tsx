@@ -1,10 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
+import { useDispatch, useSelector } from "react-redux";
+import { chooseBadgeByLevel } from "../../../assets/badges";
 import TopBanner from "../../../components/heroes/TopBanner";
 import GenericInput from "../../../components/inputs/GenericInput";
+import GenericTextArea from "../../../components/inputs/GenericTextArea";
+import { RootState } from "../../../store";
+import {
+  fetchUserDetails,
+  UserDispatch,
+} from "../../../store/slices/user/userSlice";
+import "./styles.scss";
 
 type Props = {};
 
 export default function ProfilePage({}: Props) {
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const { user } = useSelector((state: RootState) => state.user);
+  const [cookies] = useCookies(["token"]);
+
+  const userDispatch: UserDispatch = useDispatch();
+
+  useEffect(() => {
+    userDispatch(fetchUserDetails(cookies.token));
+  }, [userDispatch, cookies.token]);
+
   return (
     <div>
       <TopBanner title="MY PROFILE" />
@@ -17,26 +37,12 @@ export default function ProfilePage({}: Props) {
             <div className="col-lg-4">
               <div className="card mb-4">
                 <div className="card-body text-center">
-                  <img
-                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
-                    alt="avatar"
-                    className="rounded-circle img-fluid"
-                    style={{ width: 150 }}
-                  />
-                  <h5 className="my-3">John Smith</h5>
-                  <p className="text-muted mb-1">Full Stack Developer</p>
-                  <p className="text-muted mb-4">Bay Area, San Francisco, CA</p>
-                  <div className="d-flex justify-content-center mb-2">
-                    <button type="button" className="btn btn-primary">
-                      Follow
-                    </button>
-                    <button
-                      type="button"
-                      className="btn btn-outline-primary ms-1"
-                    >
-                      Message
-                    </button>
+                  <div className="avatar">
+                    {chooseBadgeByLevel(user?.level_id ? user.level_id : 0)}
                   </div>
+                  <h5 className="my-3">{user?.fullname}</h5>
+                  <p className="mb-1 level-text">{user?.level.name}</p>
+                  <p className="text-muted mb-4">{user?.address}</p>
                 </div>
               </div>
               <div className="card mb-4 mb-lg-0">
@@ -94,8 +100,30 @@ export default function ProfilePage({}: Props) {
                         onChange={() => {}}
                         type="text"
                         required={true}
-                        value=""
+                        value={user?.fullname ? user.fullname : ""}
                       />
+                    </div>
+                  </div>
+                  <hr />
+                  <div className="row">
+                    <div className="col-sm-3">
+                      <p className="mb-0">Username</p>
+                    </div>
+                    <div className="col-sm-9">
+                      <p className="text-muted mb-0">
+                        {" "}
+                        <GenericInput
+                          error=""
+                          formText=""
+                          label=""
+                          name=""
+                          onChange={() => {}}
+                          type="text"
+                          required={false}
+                          value={user?.username ? user.username : ""}
+                          disabled={true}
+                        />
+                      </p>
                     </div>
                   </div>
                   <hr />
@@ -104,7 +132,19 @@ export default function ProfilePage({}: Props) {
                       <p className="mb-0">Email</p>
                     </div>
                     <div className="col-sm-9">
-                      <p className="text-muted mb-0">example@example.com</p>
+                      <p className="text-muted mb-0">
+                        <GenericInput
+                          error=""
+                          formText=""
+                          label=""
+                          name=""
+                          onChange={() => {}}
+                          type="text"
+                          required={false}
+                          value={user?.email ? user.email : ""}
+                          disabled={true}
+                        />
+                      </p>
                     </div>
                   </div>
                   <hr />
@@ -113,29 +153,63 @@ export default function ProfilePage({}: Props) {
                       <p className="mb-0">Phone</p>
                     </div>
                     <div className="col-sm-9">
-                      <p className="text-muted mb-0">(097) 234-5678</p>
+                      <p className="text-muted mb-0">
+                        <GenericInput
+                          error=""
+                          formText=""
+                          label=""
+                          name=""
+                          onChange={() => {}}
+                          type="text"
+                          required={true}
+                          value={user?.phone_no ? user.phone_no : ""}
+                        />
+                      </p>
                     </div>
                   </div>
                   <hr />
                   <div className="row">
-                    <div className="col-sm-3">
-                      <p className="mb-0">Mobile</p>
-                    </div>
-                    <div className="col-sm-9">
-                      <p className="text-muted mb-0">(098) 765-4321</p>
-                    </div>
-                  </div>
-                  <hr />
-                  <div className="row">
-                    <div className="col-sm-3">
+                    <div className="col-sm-3 d-flex align-items-center">
                       <p className="mb-0">Address</p>
                     </div>
                     <div className="col-sm-9">
                       <p className="text-muted mb-0">
-                        Bay Area, San Francisco, CA
+                        <GenericInput
+                          error=""
+                          formText=""
+                          label=""
+                          name=""
+                          onChange={() => {}}
+                          type="text"
+                          required={true}
+                          value={user?.address ? user.address : ""}
+                          disabled={false}
+                        />
                       </p>
                     </div>
                   </div>
+                  <hr />
+                  <div className="row">
+                    <div className="col-sm-3 d-flex align-items-center">
+                      <p className="mb-0">Referral Code</p>
+                    </div>
+                    <div className="col-sm-9">
+                      <p className="text-muted mb-0">
+                        <GenericInput
+                          error=""
+                          formText=""
+                          label=""
+                          name=""
+                          onChange={() => {}}
+                          type="text"
+                          required={false}
+                          value={user?.referral_code ? user.referral_code : ""}
+                          disabled={true}
+                        />
+                      </p>
+                    </div>
+                  </div>
+                  <hr />
                 </div>
               </div>
               <div className="row">

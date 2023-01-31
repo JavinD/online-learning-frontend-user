@@ -28,7 +28,6 @@ export default function GenericTextArea({
           borderColor: error !== "" ? "red" : "",
         }}
         className="form-control auth-form-control"
-        id="exampleInputPassword1"
         value={value}
         onChange={onChange}
         name={name}

@@ -1,5 +1,4 @@
-import React from "react";
-import { ICourse, IUserBookmark, IUserCourse } from "../../../interfaces";
+import { ICourse } from "../../../interfaces";
 import CourseCard from "../../cards/CourseCard";
 
 type Props = {

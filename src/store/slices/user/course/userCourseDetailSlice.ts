@@ -18,7 +18,7 @@ export const fetchUserCourseDetail = createAsyncThunk<
   { rejectValue: string }
 >("FETCH_USER_COURSE", ({ token, id }, { rejectWithValue }) => {
   const API_URL_USER_COURSE =
-    process.env.REACT_APP_API_URL_AUTH_USER + "/course/";
+    process.env.REACT_APP_API_URL_AUTH_USER + "/course";
 
   const idString = id?.toString();
 

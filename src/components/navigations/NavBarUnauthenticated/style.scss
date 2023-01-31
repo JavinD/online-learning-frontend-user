@@ -11,11 +11,29 @@ $secondary-text-color: #80868b;
     .navbar-nav {
       .nav-link {
         color: $secondary-text-color;
+
+        background-image: linear-gradient(
+          to right,
+          $primary-color,
+          $primary-color 50%,
+          $secondary-color 50%
+        );
+        font-size: 1.2rem;
+        font-weight: 600;
+        padding: 0.5rem 1rem;
+        background-size: 200% 100%;
+        background-position: -100%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        transition: all 0.3s ease-in-out;
+
         &:hover {
-          text-decoration: underline;
+          background-position: 0;
         }
-        &.active {
-          text-decoration: underline;
+
+        &:hover::before {
+          background-position: 0;
         }
       }
     }
@@ -24,6 +42,27 @@ $secondary-text-color: #80868b;
     font-weight: 900;
     font-size: 1.5rem;
     color: $primary-text-color;
+    background-image: linear-gradient(
+      to right,
+      $primary-color,
+      $primary-color 50%,
+      $primary-text-color 50%
+    );
+
+    background-size: 200% 100%;
+    background-position: -100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      background-position: 0;
+    }
+
+    &:hover::before {
+      background-position: 0;
+    }
   }
   padding-left: 0;
   padding-right: 0;

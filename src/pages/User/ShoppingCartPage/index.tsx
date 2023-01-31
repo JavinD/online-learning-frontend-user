@@ -81,7 +81,7 @@ export default function ShoppingCart() {
       })
       .then((res) => {
         toastSuccess("Item removed from cart");
-        window.location.reload();
+        cartDispatch(fetchCart(cookies.token));
         return;
       })
       .catch((error) => {
@@ -220,7 +220,11 @@ export default function ShoppingCart() {
                           value={voucher}
                           className="cart-form-control"
                         />
-                        <GenericButton type="submit" label="Checkout" />
+                        <GenericButton
+                          disabled={!cart ? true : false}
+                          type="submit"
+                          label="Checkout"
+                        />
                       </form>
                     </div>
                   </div>

@@ -193,3 +193,13 @@ export interface IVoucher {
   created_at: string;
   updated_at: string;
 }
+
+export interface IUserVoucher {
+  id: number;
+  user_id: number;
+  voucher_code: string;
+  voucher: IVoucher;
+  expired_at: string;
+  created_at: string;
+  updated_at: string;
+}

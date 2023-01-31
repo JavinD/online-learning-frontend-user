@@ -23,7 +23,7 @@ export default function CartItemCard({ cartItem, handleRemoveItem }: Props) {
   };
 
   function instanceOfTransaction(data: any): data is ITransaction {
-    return "course" in data;
+    return "price" in data;
   }
 
   if (instanceOfTransaction(cartItem)) {

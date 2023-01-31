@@ -1,5 +1,6 @@
 import React from "react";
 import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 import { IInvoice } from "../../../interfaces";
 import { toastFailed, toastSuccess, toRupiah } from "../../../utils/util";
 import GenericButton from "../../buttons/GenericButton";
@@ -12,6 +13,7 @@ type Props = {
 };
 
 export default function InvoiceForm({ invoice }: Props) {
+  const navigate = useNavigate();
   const [cookies] = useCookies(["token"]);
   const API_URL = process.env.REACT_APP_API_URL_AUTH_USER + "/invoice";
   if (!invoice) {
@@ -40,7 +42,7 @@ export default function InvoiceForm({ invoice }: Props) {
       })
       .then((res) => {
         toastSuccess("Payment Successful");
-        window.location.reload();
+        navigate("/user/invoice");
         return;
       })
       .catch((error) => {

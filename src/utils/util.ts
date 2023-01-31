@@ -135,3 +135,11 @@ export const toDate = (str: string | undefined) => {
     date.getFullYear()
   );
 };
+
+export const isDateExpired = (str: string | Date | undefined) => {
+  if (str === undefined) {
+    return false;
+  }
+  const date = new Date(str);
+  return date < new Date();
+};

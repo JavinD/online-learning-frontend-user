@@ -15,6 +15,10 @@ $secondary-text-color: #80868b;
   margin: 1rem 0;
   letter-spacing: 0.1rem;
   width: 100%;
+  &:disabled {
+    background-color: #f0f0f1;
+    color: #80868b;
+  }
 
   &:hover {
     background-color: $primary-color;

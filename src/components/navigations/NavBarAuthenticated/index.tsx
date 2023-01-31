@@ -101,6 +101,11 @@ export default function NavBar() {
                     </NavLink>
                   </li>
                   <li>
+                    <NavLink className="dropdown-item" to="/user/reward">
+                      My Rewards
+                    </NavLink>
+                  </li>
+                  <li>
                     <NavLink className="dropdown-item" to="/user/profile">
                       My Profile
                     </NavLink>

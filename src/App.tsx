@@ -21,6 +21,7 @@ import InvoiceDetailPage from "./pages/User/InvoiceDetailPage";
 import InvoicePayPage from "./pages/User/InvoicePayPage";
 import MyFavoritePage from "./pages/User/MyFavoritePage";
 import MyCoursePage from "./pages/User/MyCoursePage";
+import MyRewardPage from "./pages/User/MyRewardPage";
 
 function App() {
   return (
@@ -40,10 +41,12 @@ function App() {
           <Route element={<AuthenticatedOnlyPage />}>
             <Route path="/course/:slug" element={<CourseDetailPage />} />
             <Route path="/user">
-              <Route index path="profile" element={<ProfilePage />} />
+              <Route index element={<ProfilePage />} />
+              <Route path="profile" element={<ProfilePage />} />
               <Route path="course" element={<MyCoursePage />} />
               <Route path="favorite" element={<MyFavoritePage />} />
-              <Route index path="cart" element={<ShoppingCart />} />
+              <Route path="cart" element={<ShoppingCart />} />
+              <Route path="reward" element={<MyRewardPage />} />
               <Route path="invoice">
                 <Route index element={<InvoicePage />} />
                 <Route path=":id" element={<InvoiceDetailPage />} />

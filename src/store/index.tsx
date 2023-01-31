@@ -12,6 +12,7 @@ import invoiceReducer from "./slices/user/invoice/invoiceSlice";
 import invoiceDetailReducer from "./slices/user/invoice/invoiceDetailSlice";
 import userBookmarkReducer from "./slices/user/bookmark/userBookmarkSlice";
 import userCourseReducer from "./slices/user/course/userCourseSlice";
+import userVoucherReducer from "./slices/user/voucher/userVoucherSlice";
 import logger from "redux-logger";
 import thunk from "redux-thunk";
 
@@ -30,6 +31,7 @@ export const store = configureStore({
     invoiceDetail: invoiceDetailReducer,
     userCourse: userCourseReducer,
     userBookmark: userBookmarkReducer,
+    userVoucher: userVoucherReducer,
   },
   middleware: [logger, thunk],
 });

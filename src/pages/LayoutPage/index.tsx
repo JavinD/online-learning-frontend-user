@@ -8,15 +8,16 @@ import NavBarAuthenticated from "../../components/navigations/NavBarAuthenticate
 import Footer from "../../components/navigations/Footer";
 
 export default function LayoutPage() {
-  const [cookies] = useCookies(["token"]);
-  const decodedToken = decodeToken(cookies.token);
-  const isMyTokenExpired = isExpired(cookies.token);
+  const [cookies] = useCookies(["access_token"]);
+  const decodedToken = decodeToken(cookies.access_token);
+  const isMyTokenExpired = isExpired(cookies.access_token);
 
   if (decodedToken === null || isMyTokenExpired === true) {
     return (
       <div>
         <NavBarUnauthenticated />
         <Outlet />
+        <Footer />
       </div>
     );
   }

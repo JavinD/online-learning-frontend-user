@@ -22,7 +22,7 @@ import {
 import { useCookies } from "react-cookie";
 
 export default function MyFavoritePage() {
-  const [cookies] = useCookies(["token"]);
+  const [cookies] = useCookies(["access_token"]);
   const { course: userBookmark } = useSelector(
     (state: RootState) => state.userBookmark
   );
@@ -60,7 +60,7 @@ export default function MyFavoritePage() {
       tags: currentTags,
       category: currentCategory,
       status: "",
-      token: cookies.token,
+      access_token: cookies.access_token,
     };
     userBookmarkDispatch(fetchUserBookmark(request));
   }, [

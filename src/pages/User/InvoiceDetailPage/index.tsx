@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import CartItemCard from "../../../components/cart/CartItemCard";
 import { RootState } from "../../../store";
 import {
@@ -11,11 +11,10 @@ import {
 import { countTotalPrice, toRupiah } from "../../../utils/util";
 
 export default function InvoiceDetailPage() {
-  const location = useLocation();
   const { invoice } = useSelector((state: RootState) => state.invoiceDetail);
   const invoiceDetailDispatch: InvoiceDetailDispatch = useDispatch();
   const { id } = useParams();
-  const [cookies] = useCookies(["token"]);
+  const [cookies] = useCookies(["access_token"]);
   const discount = useRef(0);
   const total = useRef(0);
   const idNum = Number(id);
@@ -24,10 +23,10 @@ export default function InvoiceDetailPage() {
     invoiceDetailDispatch(
       fetchInvoiceDetail({
         id: idNum,
-        token: cookies.token,
+        access_token: cookies.access_token,
       })
     );
-  }, [invoiceDetailDispatch, cookies.token, idNum]);
+  }, [invoiceDetailDispatch, cookies.access_token, idNum]);
 
   useEffect(() => {
     if (invoice) {

@@ -26,7 +26,7 @@ export default function ProfilePage() {
   const API_URL_USER = process.env.REACT_APP_API_URL_AUTH_USER;
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const { user } = useSelector((state: RootState) => state.user);
-  const [cookies] = useCookies(["token"]);
+  const [cookies] = useCookies(["access_token"]);
   const userDispatch: UserDispatch = useDispatch();
 
   const [updateUser, setUpdateUser] = useState({
@@ -107,8 +107,8 @@ export default function ProfilePage() {
   };
 
   useEffect(() => {
-    userDispatch(fetchUserDetails(cookies.token));
-  }, [userDispatch, cookies.token]);
+    userDispatch(fetchUserDetails(cookies.access_token));
+  }, [userDispatch, cookies.access_token]);
 
   useEffect(() => {
     setUpdateUser({
@@ -139,7 +139,7 @@ export default function ProfilePage() {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${cookies.token}`,
+        Authorization: `Bearer ${cookies.access_token}`,
       },
       body: JSON.stringify({
         fullname: updateUser.fullname,
@@ -160,7 +160,7 @@ export default function ProfilePage() {
         return response.json();
       })
       .then((res) => {
-        userDispatch(fetchUserDetails(cookies.token));
+        userDispatch(fetchUserDetails(cookies.access_token));
         setIsEditing(false);
         toastSuccess("Profile updated successfully");
       })

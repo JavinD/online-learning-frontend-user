@@ -19,7 +19,7 @@ export default function LoginPage() {
     identifier: "",
     password: "",
   });
-  const [cookies, setCookie] = useCookies(["token"]);
+  const [cookies, setCookie] = useCookies(["access_token"]);
   const API_URL = process.env.REACT_APP_API_URL;
 
   const validateError = (name: string, value: string) => {
@@ -75,7 +75,7 @@ export default function LoginPage() {
       })
       .then((res) => {
         if (res.access_token) {
-          setCookie("token", res.access_token, { path: "/" });
+          setCookie("access_token", res.access_token, { path: "/" });
         }
 
         navigate("/");

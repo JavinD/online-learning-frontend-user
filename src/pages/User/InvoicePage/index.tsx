@@ -11,14 +11,12 @@ import {
   InvoiceDispatch,
 } from "../../../store/slices/user/invoice/invoiceSlice";
 
-type Props = {};
-
-export default function InvoicePage({}: Props) {
+export default function InvoicePage() {
   const { invoices } = useSelector((state: RootState) => state.invoice);
   const invoiceDispatch: InvoiceDispatch = useDispatch();
   const [pageNumber, setPageNumber] = React.useState(1);
   const [pageTotal, setPageTotal] = React.useState(1);
-  const [cookies] = useCookies(["token"]);
+  const [cookies] = useCookies(["access_token"]);
   const [currentSortDir, setCurrentSortDir] = useState<string>("desc");
   const [filterStatus, setFilterStatus] = useState<string>("");
   const [filterDate, setFilterDate] = useState<string>("");
@@ -35,7 +33,7 @@ export default function InvoicePage({}: Props) {
         tags: "",
         category: "",
         status: filterStatus,
-        token: cookies.token,
+        access_token: cookies.access_token,
       })
     );
   }, [

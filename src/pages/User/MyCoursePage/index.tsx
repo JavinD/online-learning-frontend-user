@@ -22,7 +22,7 @@ import {
 import { useCookies } from "react-cookie";
 
 export default function MyCoursePage() {
-  const [cookies] = useCookies(["token"]);
+  const [cookies] = useCookies(["access_token"]);
   const { course: userCourse } = useSelector(
     (state: RootState) => state.userCourse
   );
@@ -60,7 +60,7 @@ export default function MyCoursePage() {
       tags: currentTags,
       category: currentCategory,
       status: "",
-      token: cookies.token,
+      access_token: cookies.access_token,
     };
     userCourseDispatch(fetchUserCourse(request));
   }, [
@@ -74,7 +74,7 @@ export default function MyCoursePage() {
   ]);
 
   useEffect(() => {
-    if (userCourse !== undefined) {
+    if (userCourse?.pagination_response !== undefined) {
       setPageTotal(
         Math.ceil(
           userCourse?.pagination_response.total_item /

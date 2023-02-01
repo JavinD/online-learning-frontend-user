@@ -11,13 +11,13 @@ import {
 import "./styles.scss";
 
 export default function MyRewardPage() {
-  const [cookies] = useCookies(["token"]);
+  const [cookies] = useCookies(["access_token"]);
   const { voucher } = useSelector((state: RootState) => state.userVoucher);
   const userVoucherDispatch: UserVoucherDispatch = useDispatch();
 
   useEffect(() => {
-    userVoucherDispatch(fetchUserVoucher(cookies.token));
-  }, [userVoucherDispatch, cookies.token]);
+    userVoucherDispatch(fetchUserVoucher(cookies.access_token));
+  }, [userVoucherDispatch, cookies.access_token]);
 
   return (
     <div>

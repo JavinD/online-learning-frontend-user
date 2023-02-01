@@ -37,7 +37,7 @@ export default function RegisterPage() {
     referrer: "",
     username: "",
   });
-  const [cookies, setCookie] = useCookies(["token"]);
+  const [cookies, setCookie] = useCookies(["access_token"]);
 
   const validateError = (name: string, value: string) => {
     let error = "";
@@ -209,7 +209,7 @@ export default function RegisterPage() {
       })
       .then((res) => {
         if (res.access_token) {
-          setCookie("token", res.access_token, { path: "/" });
+          setCookie("access_token", res.access_token, { path: "/" });
         }
 
         navigate("/user-login");

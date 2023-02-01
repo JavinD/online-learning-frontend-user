@@ -16,14 +16,14 @@ export const fetchCourse = createAsyncThunk<
   ICourseDetail,
   ICourseRequest,
   { rejectValue: string }
->("FETCH_COURSE", ({ token, slug }, { rejectWithValue }) => {
+>("FETCH_COURSE", ({ access_token, slug }, { rejectWithValue }) => {
   const API_URL_COURSE = process.env.REACT_APP_API_URl_AUTH + "/course";
 
   return fetch(API_URL_COURSE + "/" + slug, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
+      Authorization: "Bearer " + access_token,
     },
   })
     .then((response) => {

@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import emptyBox from "../../../assets/empty-box.json";
 import LottieComponent from "../../../components/animations/Lottie";
 import GenericButton from "../../../components/buttons/GenericButton";
 import CartItemCard from "../../../components/cart/CartItemCard";
@@ -21,7 +22,6 @@ import {
   toRupiah,
 } from "../../../utils/util";
 import "./styles.scss";
-import emptyBox from "../../../assets/empty-box.json";
 
 export default function ShoppingCart() {
   const API_URL = process.env.REACT_APP_API_URL_AUTH_USER;
@@ -29,8 +29,7 @@ export default function ShoppingCart() {
 
   const { cart } = useSelector((state: RootState) => state.cart);
   const { user } = useSelector((state: RootState) => state.user);
-  const [cookies] = useCookies(["token"]);
-  const [isVoucherUsed, setIsVoucherUsed] = React.useState(false);
+  const [cookies] = useCookies(["access_token"]);
   const [voucher, setVoucher] = React.useState("");
   const [total, setTotal] = React.useState(0);
   const [discount, setDiscount] = React.useState(0);
@@ -44,12 +43,12 @@ export default function ShoppingCart() {
   };
 
   useEffect(() => {
-    userDispatch(fetchUserDetails(cookies.token));
-  }, [userDispatch, cookies.token]);
+    userDispatch(fetchUserDetails(cookies.access_token));
+  }, [userDispatch, cookies.access_token]);
 
   useEffect(() => {
-    cartDispatch(fetchCart(cookies.token));
-  }, [cartDispatch, cookies.token]);
+    cartDispatch(fetchCart(cookies.access_token));
+  }, [cartDispatch, cookies.access_token]);
 
   useEffect(() => {
     setTotal(countCartTotal(cart));
@@ -64,7 +63,7 @@ export default function ShoppingCart() {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + cookies.token,
+        Authorization: "Bearer " + cookies.access_token,
       },
     };
 
@@ -81,7 +80,7 @@ export default function ShoppingCart() {
       })
       .then((res) => {
         toastSuccess("Item removed from cart");
-        cartDispatch(fetchCart(cookies.token));
+        cartDispatch(fetchCart(cookies.access_token));
         return;
       })
       .catch((error) => {
@@ -95,7 +94,7 @@ export default function ShoppingCart() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + cookies.token,
+        Authorization: "Bearer " + cookies.access_token,
       },
       body: JSON.stringify({ voucher_code: "" }),
     };

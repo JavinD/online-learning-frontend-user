@@ -54,7 +54,7 @@ export default function CoursePage({ Banner }: Props) {
       tags: currentTags,
       category: currentCategory,
       status: "",
-      token: "",
+      access_token: "",
     };
     courseDispatch(fetchCourses(request));
   }, [

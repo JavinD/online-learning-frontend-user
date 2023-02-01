@@ -24,7 +24,7 @@ export interface IFilterRequest {
   tags: string;
   category: string;
   status: string;
-  token: string;
+  access_token: string;
 }
 
 export interface IPaginationResponse {
@@ -114,12 +114,12 @@ export interface IUserBookmark {
   id: number;
 }
 export interface IUserCourseRequest {
-  token: string;
+  access_token: string;
   id: number | undefined;
 }
 
 export interface ICourseRequest {
-  token: string;
+  access_token: string;
   slug: string | undefined;
 }
 

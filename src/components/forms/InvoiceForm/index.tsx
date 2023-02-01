@@ -14,7 +14,7 @@ type Props = {
 
 export default function InvoiceForm({ invoice }: Props) {
   const navigate = useNavigate();
-  const [cookies] = useCookies(["token"]);
+  const [cookies] = useCookies(["access_token"]);
   const API_URL = process.env.REACT_APP_API_URL_AUTH_USER + "/invoice";
   if (!invoice) {
     return <div></div>;
@@ -25,7 +25,7 @@ export default function InvoiceForm({ invoice }: Props) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + cookies.token,
+        Authorization: "Bearer " + cookies.access_token,
       },
     };
 

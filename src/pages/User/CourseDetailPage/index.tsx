@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import GenericButton from "../../../components/buttons/GenericButton";
 import CourseCategory from "../../../components/course/Category";
 import TopBanner from "../../../components/heroes/TopBanner";
@@ -13,24 +13,19 @@ import {
   fetchCourse,
 } from "../../../store/slices/course/courseDetailSlice";
 import {
-  fetchUserCourseDetail,
-  UserCourseDetailDispatch,
-} from "../../../store/slices/user/course/userCourseDetailSlice";
-import {
   fetchUserBookmarkDetail,
   UserBookmarkDetailDispatch,
 } from "../../../store/slices/user/bookmark/userBookmarkDetailSlice";
+import {
+  fetchUserCourseDetail,
+  UserCourseDetailDispatch,
+} from "../../../store/slices/user/course/userCourseDetailSlice";
 import { isCourseInCart, toastFailed, toastSuccess } from "../../../utils/util";
-import heartIcon from "../../../assets/heart.svg";
 import "./styles.scss";
-import BookmarkIcon from "../../../components/course/Bookmark";
-import CartIcon from "../../../components/cart/CartIcon";
-import { totalmem } from "os";
-import { encode } from "punycode";
 
 export default function CourseDetailPage() {
   const API_URL = process.env.REACT_APP_API_URL_AUTH_USER;
-  const navigate = useNavigate();
+
   const shareMessage = "Check out this new course!" + window.location.href;
 
   const { slug } = useParams();
@@ -44,7 +39,7 @@ export default function CourseDetailPage() {
     (state: RootState) => state.userBookmarkDetail
   );
   const { cart } = useSelector((state: RootState) => state.cart);
-  const [cookies] = useCookies(["token"]);
+  const [cookies] = useCookies(["access_token"]);
   const [isInCart, setIsInCart] = React.useState(false);
   const [isOwned, setIsOwned] = React.useState(false);
   const [bookmarkState, setBookmarkState] = React.useState("active");
@@ -59,32 +54,32 @@ export default function CourseDetailPage() {
     courseDetailDispatch(
       fetchCourse({
         slug: slug,
-        token: cookies.token,
+        access_token: cookies.access_token,
       })
     );
-  }, [courseDetailDispatch, slug, cookies.token]);
+  }, [courseDetailDispatch, slug, cookies.access_token]);
 
   useEffect(() => {
-    cartDispatch(fetchCart(cookies.token));
-  }, [cartDispatch, cookies.token]);
+    cartDispatch(fetchCart(cookies.access_token));
+  }, [cartDispatch, cookies.access_token]);
 
   useEffect(() => {
     userCourseDetailDispatch(
       fetchUserCourseDetail({
-        token: cookies.token,
+        access_token: cookies.access_token,
         id: course?.id,
       })
     );
-  }, [userCourseDetailDispatch, cookies.token, course?.id]);
+  }, [userCourseDetailDispatch, cookies.access_token, course?.id]);
 
   useEffect(() => {
     userBookmarkDetailDispatch(
       fetchUserBookmarkDetail({
-        token: cookies.token,
+        access_token: cookies.access_token,
         id: course?.id,
       })
     );
-  }, [userBookmarkDetailDispatch, cookies.token, course?.id]);
+  }, [userBookmarkDetailDispatch, cookies.access_token, course?.id]);
 
   useEffect(() => {
     if (cart !== undefined && course !== undefined) {
@@ -110,7 +105,7 @@ export default function CourseDetailPage() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + cookies.token,
+        Authorization: "Bearer " + cookies.access_token,
       },
       body: JSON.stringify({ state: bookmarkState }),
     };
@@ -147,7 +142,7 @@ export default function CourseDetailPage() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + cookies.token,
+        Authorization: "Bearer " + cookies.access_token,
       },
     };
 
@@ -192,7 +187,7 @@ export default function CourseDetailPage() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + cookies.token,
+        Authorization: "Bearer " + cookies.access_token,
       },
       body: JSON.stringify({ action: courseAction }),
     };
@@ -211,7 +206,7 @@ export default function CourseDetailPage() {
       .then((res) => {
         userCourseDetailDispatch(
           fetchUserCourseDetail({
-            token: cookies.token,
+            access_token: cookies.access_token,
             id: course?.id,
           })
         );

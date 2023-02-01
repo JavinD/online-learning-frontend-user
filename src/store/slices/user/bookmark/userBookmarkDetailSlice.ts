@@ -16,7 +16,7 @@ export const fetchUserBookmarkDetail = createAsyncThunk<
   IUserBookmark,
   IUserCourseRequest,
   { rejectValue: string }
->("FETCH_USER_BOOKMARK", ({ token, id }, { rejectWithValue }) => {
+>("FETCH_USER_BOOKMARK", ({ access_token, id }, { rejectWithValue }) => {
   const API_URL_USER_BOOKMARK =
     process.env.REACT_APP_API_URL_AUTH_USER + "/bookmark";
 
@@ -26,7 +26,7 @@ export const fetchUserBookmarkDetail = createAsyncThunk<
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
+      Authorization: "Bearer " + access_token,
     },
   })
     .then((response) => {

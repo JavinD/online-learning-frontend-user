@@ -10,10 +10,19 @@ import {
   Phone,
   Printer,
 } from "react-feather";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./styles.scss";
 
 export default function Footer() {
+  const location = useLocation();
+
+  if (
+    location.pathname === "/user-login" ||
+    location.pathname === "/register"
+  ) {
+    return null;
+  }
+
   return (
     <div className="footer-container">
       <footer

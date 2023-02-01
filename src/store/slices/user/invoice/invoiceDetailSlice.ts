@@ -16,7 +16,7 @@ export const fetchInvoiceDetail = createAsyncThunk<
   IInvoice,
   IUserCourseRequest,
   { rejectValue: string }
->("FETCH_INVOICE_DETAIL", ({ token, id }, { rejectWithValue }) => {
+>("FETCH_INVOICE_DETAIL", ({ access_token, id }, { rejectWithValue }) => {
   const API_URL_USER_INVOICE =
     process.env.REACT_APP_API_URL_AUTH_USER + "/invoice";
 
@@ -26,7 +26,7 @@ export const fetchInvoiceDetail = createAsyncThunk<
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
+      Authorization: "Bearer " + access_token,
     },
   })
     .then((response) => {

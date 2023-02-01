@@ -16,7 +16,7 @@ export const fetchUserCourseDetail = createAsyncThunk<
   IUserCourse,
   IUserCourseRequest,
   { rejectValue: string }
->("FETCH_USER_COURSE", ({ token, id }, { rejectWithValue }) => {
+>("FETCH_USER_COURSE", ({ access_token, id }, { rejectWithValue }) => {
   const API_URL_USER_COURSE =
     process.env.REACT_APP_API_URL_AUTH_USER + "/course";
 
@@ -26,7 +26,7 @@ export const fetchUserCourseDetail = createAsyncThunk<
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
+      Authorization: "Bearer " + access_token,
     },
   })
     .then((response) => {

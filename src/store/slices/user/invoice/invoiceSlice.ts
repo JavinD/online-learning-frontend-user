@@ -31,7 +31,7 @@ export const fetchInvoices = createAsyncThunk<
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + request.token,
+        Authorization: "Bearer " + request.access_token,
       },
     }
   )

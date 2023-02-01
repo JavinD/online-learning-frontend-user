@@ -11,7 +11,7 @@ import {
 import "./style.scss";
 
 export default function NavBar() {
-  const [cookies, removeCookie] = useCookies(["token"]);
+  const [cookies, removeCookie] = useCookies(["access_token"]);
   const { user } = useSelector((state: RootState) => state.user);
   const userDispatch: UserDispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,13 +25,13 @@ export default function NavBar() {
   }, [user]);
 
   useEffect(() => {
-    userDispatch(fetchUserDetails(cookies.token));
-  }, [userDispatch, cookies.token]);
+    userDispatch(fetchUserDetails(cookies.access_token));
+  }, [userDispatch, cookies.access_token]);
 
   const logOut: MouseEventHandler<HTMLAnchorElement> = (e) => {
     e.preventDefault();
     if (window.confirm("Are you sure you want to log out?")) {
-      removeCookie("token", { path: "/" });
+      removeCookie("access_token", { path: "/" });
       navigate("/user-login");
     } else {
     }

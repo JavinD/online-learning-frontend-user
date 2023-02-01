@@ -5,9 +5,9 @@ import { isExpired, decodeToken } from "react-jwt";
 
 export default function UnauthenticatedOnlyPage() {
   let location = useLocation();
-  const [cookies] = useCookies(["token"]);
-  const decodedToken = decodeToken(cookies.token);
-  const isMyTokenExpired = isExpired(cookies.token);
+  const [cookies] = useCookies(["access_token"]);
+  const decodedToken = decodeToken(cookies.access_token);
+  const isMyTokenExpired = isExpired(cookies.access_token);
   // if not auth then redirect to login page
   if (decodedToken !== null && isMyTokenExpired === false) {
     return <Navigate to={"/"} replace state={{ from: location }}></Navigate>;

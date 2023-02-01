@@ -5,6 +5,7 @@ import { useCookies } from "react-cookie";
 import { decodeToken, isExpired } from "react-jwt";
 import NavBarUnauthenticated from "../../components/navigations/NavBarUnauthenticated";
 import NavBarAuthenticated from "../../components/navigations/NavBarAuthenticated";
+import Footer from "../../components/navigations/Footer";
 
 export default function LayoutPage() {
   const [cookies] = useCookies(["token"]);
@@ -16,7 +17,6 @@ export default function LayoutPage() {
       <div>
         <NavBarUnauthenticated />
         <Outlet />
-        
       </div>
     );
   }
@@ -25,6 +25,7 @@ export default function LayoutPage() {
     <div>
       <NavBarAuthenticated />
       <Outlet />
+      <Footer />
     </div>
   );
 }

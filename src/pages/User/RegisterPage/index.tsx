@@ -9,7 +9,7 @@ import {
   isAlphaNumeric,
   isNumber,
   toastFailed,
-  validateEmail
+  validateEmail,
 } from "../../../utils/util";
 import "./style.scss";
 
@@ -44,6 +44,10 @@ export default function RegisterPage() {
     if (name === "fullname") {
       if (value === "") {
         error = "Full Name is required";
+      }
+
+      if (value.length < 5 || value.length > 20) {
+        error = "Full name must be between 5 to 20 characters";
       }
       setError({
         ...errors,
@@ -154,7 +158,7 @@ export default function RegisterPage() {
         error = "Phone Number is required";
       }
 
-      if (value.length < 9 || value.length > 15) {
+      if (value.length < 10 || value.length > 15) {
         error = "Phone number must be between 9 to 15 digits";
       }
 

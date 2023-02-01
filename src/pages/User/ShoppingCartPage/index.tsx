@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
+import LottieComponent from "../../../components/animations/Lottie";
 import GenericButton from "../../../components/buttons/GenericButton";
-
 import CartItemCard from "../../../components/cart/CartItemCard";
 import GenericInput from "../../../components/inputs/GenericInput";
 import ToastComponent from "../../../components/toast";
@@ -22,6 +21,7 @@ import {
   toRupiah,
 } from "../../../utils/util";
 import "./styles.scss";
+import emptyBox from "../../../assets/empty-box.json";
 
 export default function ShoppingCart() {
   const API_URL = process.env.REACT_APP_API_URL_AUTH_USER;
@@ -134,59 +134,83 @@ export default function ShoppingCart() {
               <div className="card shopping-cart" style={{ borderRadius: 15 }}>
                 <div className="card-body text-black">
                   <div className="row">
-                    <div className="col-lg-6 px-5 py-4">
-                      <h3 className="mb-5 pt-2 text-center fw-bold text-uppercase ">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="60"
-                          height="60"
-                          fill="currentColor"
-                          className="bi bi-cart"
-                          viewBox="0 0 16 16"
-                        >
-                          <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />{" "}
-                        </svg>
-                        Shopping Cart
-                      </h3>
-                      {cart && cart.length > 0
-                        ? cart.map((item) => {
-                            return (
-                              <CartItemCard
-                                handleRemoveItem={handleRemoveItem}
-                                key={item.course.slug}
-                                cartItem={item}
-                              />
-                            );
-                          })
-                        : []}
+                    {!cart || cart.length === 0 ? (
+                      <div className="col-lg-6 px-5 py-4">
+                        <h3 className="pt-2 text-center fw-bold text-uppercase ">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="60"
+                            height="60"
+                            fill="currentColor"
+                            className="bi bi-cart"
+                            viewBox="0 0 16 16"
+                          >
+                            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />{" "}
+                          </svg>
+                          Shopping Cart
+                        </h3>
+                        <LottieComponent animationData={emptyBox} />
+                        {/* No item in cart */}
+                        <h3 className="pt-2 text-center fw-bold text-uppercase ">
+                          No item in cart
+                        </h3>
+                      </div>
+                    ) : (
+                      <div className="col-lg-6 px-5 py-4">
+                        (
+                        <h3 className="mb-5 pt-2 text-center fw-bold text-uppercase ">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="60"
+                            height="60"
+                            fill="currentColor"
+                            className="bi bi-cart"
+                            viewBox="0 0 16 16"
+                          >
+                            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />{" "}
+                          </svg>
+                          Shopping Cart
+                        </h3>
+                        {cart && cart.length > 0
+                          ? cart.map((item) => {
+                              return (
+                                <CartItemCard
+                                  handleRemoveItem={handleRemoveItem}
+                                  key={item.course.slug}
+                                  cartItem={item}
+                                />
+                              );
+                            })
+                          : []}
+                        <hr
+                          className="mb-4"
+                          style={{
+                            height: 2,
+                            backgroundColor: "#1266f1",
+                            opacity: 1,
+                          }}
+                        />
+                        <div className="d-flex justify-content-between px-x align-items-center">
+                          <p className="fw-bold">
+                            Membership Discount{" "}
+                            <span className={"level " + user?.level.name}>
+                              {userLevel} ({discount * 100}%)
+                            </span>
+                            :
+                          </p>
+                          <p className="fw-bold">
+                            - {toRupiah(discount * total)}
+                          </p>
+                        </div>
+                        <div className="d-flex justify-content-between p-2 mb-2 total">
+                          <h5 className="fw-bold mb-0">Total:</h5>
+                          <h5 className="fw-bold mb-0">
+                            {toRupiah(countTotalPrice(total, discount, 0))}
+                          </h5>
+                        </div>
+                      </div>
+                    )}
 
-                      <hr
-                        className="mb-4"
-                        style={{
-                          height: 2,
-                          backgroundColor: "#1266f1",
-                          opacity: 1,
-                        }}
-                      />
-                      <div className="d-flex justify-content-between px-x align-items-center">
-                        <p className="fw-bold">
-                          Membership Discount{" "}
-                          <span className={"level " + user?.level.name}>
-                            {userLevel} ({discount * 100}%)
-                          </span>
-                          :
-                        </p>
-                        <p className="fw-bold">
-                          - {toRupiah(discount * total)}
-                        </p>
-                      </div>
-                      <div className="d-flex justify-content-between p-2 mb-2 total">
-                        <h5 className="fw-bold mb-0">Total:</h5>
-                        <h5 className="fw-bold mb-0">
-                          {toRupiah(countTotalPrice(total, discount, 0))}
-                        </h5>
-                      </div>
-                    </div>
                     <div className="col-lg-6 px-5 py-4">
                       <h3 className="mb-5 pt-2 text-center fw-bold text-uppercase">
                         <svg
@@ -221,7 +245,7 @@ export default function ShoppingCart() {
                           className="cart-form-control"
                         />
                         <GenericButton
-                          disabled={!cart ? true : false}
+                          disabled={!cart || cart.length === 0 ? true : false}
                           type="submit"
                           label="Checkout"
                         />

@@ -3,7 +3,7 @@ import "./styles.scss";
 
 type Props = {
   label: string;
-  onClick?: () => void;
+  onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
   disabled?: boolean;
   type?: "button" | "submit" | "reset";
   icon?: React.ReactNode;

@@ -1,24 +1,30 @@
+$primary-color: #f06001;
+$secondary-color: #2ca396;
+$primary-text-color: #002337;
+$secondary-text-color: #80868b;
+
 .top-banner {
   padding-top: 15rem;
   margin-bottom: 0;
   padding-bottom: 0;
-  background-color: #f1f1f1;
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-color: #f06001;
+  background-repeat: repeat;
+  background-size: 200px;
   background-attachment: fixed;
   position: relative;
   width: 100%;
-  background-image: url(https://img.freepik.com/premium-photo/open-book-with-glasses-wooden-table-against-background-set-books-vintage-toning-web-banner-literature-learning-concept_101969-2143.jpg?w=2000);
-
-  ::before {
+  filter: brightness(1);
+  &:before {
     content: "";
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #011928;
-    opacity: 0;
+    z-index: -5;
+    background-size: 180px;
+    background-image: url(../../../assets//book.svg);
+    opacity: 0.4;
   }
 
   .banner-title {
@@ -28,7 +34,7 @@
       color: white;
       width: 100%;
       text-align: center;
-      text-transform: capitalize;
+      text-transform: uppercase;
     }
   }
 }

@@ -13,6 +13,7 @@ import CoursePage from "../User/CoursePage";
 import "./style.scss";
 import LottieComponent from "../../components/animations/Lottie";
 import { useNavigate } from "react-router-dom";
+import Footer from "../../components/navigations/Footer";
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -27,11 +28,7 @@ export default function HomePage() {
   }, [trendingCourseDispatch]);
 
   return (
-    <div className="vh-100">
-      <br />
-      <br />
-      <br />
-      <br />
+    <div>
       {/* Greeting Section */}
       <section className="container">
         <div className="row greeting-container d-flex justify-content-center">
@@ -40,9 +37,10 @@ export default function HomePage() {
               Welcome to <p className="primary">DigiEdu!</p>
             </h3>
             <h4 className="greeting-subheading">
-              There are many variations of passages of lorem ipsum available but
-              the majority have suffered alteration in some form by injected
-              humour or randomised words which don't look.
+              Welcome to DigiEdu, your ultimate destination for digital
+              education. Our platform is designed to offer you the most
+              comprehensive, engaging, and convenient learning experience
+              possible.
             </h4>
             <div className="row d-flex justify-content-evenlly">
               <div className="col-md-6">

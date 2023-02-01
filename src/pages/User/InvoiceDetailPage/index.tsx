@@ -101,7 +101,7 @@ export default function InvoiceDetailPage() {
                         <div className="d-flex flex-column justify-content-center ">
                           <div className="d-flex justify-content-center">
                             <img
-                              src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${
+                              src={`https://api.qrserver.com/v1/create-qr-code/?size=225x225&data=${
                                 window.location.href + "/pay"
                               }`}
                               alt="QR Code"

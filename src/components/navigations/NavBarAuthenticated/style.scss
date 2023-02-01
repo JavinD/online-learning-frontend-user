@@ -6,7 +6,8 @@ $secondary-text-color: #80868b;
 
 .navbar-auth {
   background-color: white;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+
   .container {
     .navbar-nav {
       .nav-link {
@@ -42,10 +43,16 @@ $secondary-text-color: #80868b;
           font-size: 1.2rem;
           font-weight: 600;
           padding: 0.5rem 1rem;
+          color: #000;
         }
       }
 
       .dropdown {
+        button {
+          &:hover {
+            background-position: 0;
+          }
+        }
         .dropdown-toggle {
           color: $secondary-text-color;
           font-size: 1.2rem;

@@ -31,13 +31,12 @@ $secondary-text-color: #80868b;
   .auth-form-section {
     .auth-form-label {
       font-size: 1rem;
-      font-weight: 700;
+      font-weight: 500;
     }
 
     .auth-form-control {
       font-size: 1rem;
       font-weight: 300;
-      border: 1px solid $secondary-text-color;
       border-radius: 0.5rem;
       margin-bottom: 0.2rem;
     }

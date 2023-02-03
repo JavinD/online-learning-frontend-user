@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useCookies } from "react-cookie";
+import QRCode from "react-qr-code";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import CartItemCard from "../../../components/cart/CartItemCard";
@@ -99,12 +100,7 @@ export default function InvoiceDetailPage() {
                         {/* Generate QR CODE */}
                         <div className="d-flex flex-column justify-content-center ">
                           <div className="d-flex justify-content-center">
-                            <img
-                              src={`https://api.qrserver.com/v1/create-qr-code/?size=225x225&data=${
-                                window.location.href + "/pay"
-                              }`}
-                              alt="QR Code"
-                            />
+                            <QRCode value={window.location.href + "/pay"} />
                           </div>
                           <br />
                           <br />

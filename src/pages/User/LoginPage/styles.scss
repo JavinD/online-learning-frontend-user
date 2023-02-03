@@ -1,0 +1,59 @@
+$primary-color: #f06001;
+$secondary-color: #2ca396;
+$primary-text-color: #002337;
+$secondary-text-color: #80868b;
+
+.login-hero-text {
+  .login-hero-heading {
+    color: white;
+    font-size: 3rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+
+    .primary-text {
+      color: $primary-text-color;
+    }
+  }
+  .login-hero-subheading {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .gradient-form {
+    height: 100vh !important;
+  }
+}
+@media (min-width: 769px) {
+  .gradient-custom-2 {
+    border-top-right-radius: 0.3rem;
+    border-bottom-right-radius: 0.3rem;
+  }
+}
+
+.gradient-custom-2 {
+  /* fallback for old browsers */
+  background: #fccb90;
+
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-linear-gradient(
+    to right,
+    #ee7724,
+    #d8363a,
+    #dd3675,
+    #b44593
+  );
+
+  background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+}
+
+.form-control {
+  border: 1px solid rgba($color: #000000, $alpha: 0.2);
+}
+
+.auth-form-control {
+  border: 1px solid rgba($color: #000000, $alpha: 0.2);
+}

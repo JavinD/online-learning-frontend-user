@@ -11,7 +11,7 @@ import {
   toastFailed,
   validateEmail,
 } from "../../../utils/util";
-import "./style.scss";
+import "./styles.scss";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -220,27 +220,39 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="row vh-100 gap-5">
+    <div className="row">
       <ToastComponent />
-      <div className="col-xl-5 d-flex flex-column justify-content-center login-hero">
-        <div className="login-hero-box">
-          <div className="login-hero-text">
-            <h2 className="login-hero-heading">
-              Digital platform for online{" "}
-              <strong className="primary-text">learning.</strong>
-            </h2>
-            <h3 className="login-hero-subheading">asdadsasdas</h3>
+      <section className="h-100 gradient-form">
+        <div className="container py-5 h-100">
+          <div className="row d-flex justify-content-center align-items-center h-100">
+            <div className="col-xl-10">
+              <div className="card rounded-3 text-black">
+                <div className="row g-0">
+                  <div className="col-lg-6 d-flex align-items-center gradient-custom-2">
+                    <div className="text-white px-3 py-4 p-md-5 mx-md-4">
+                      <div className="login-hero-text">
+                        <h2 className="login-hero-heading">
+                          Digital platform for online{" "}
+                          <strong className="primary-text">learning.</strong>
+                        </h2>
+                        <h3 className="login-hero-subheading">asdadsasdas</h3>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-lg-6">
+                    <RegisterForm
+                      data={data}
+                      errors={errors}
+                      onChange={onChange}
+                      onSubmit={onSubmit}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="col-xl-5 d-flex justify-content-center align-items-center">
-        <RegisterForm
-          data={data}
-          errors={errors}
-          onChange={onChange}
-          onSubmit={onSubmit}
-        />
-      </div>
+      </section>
     </div>
   );
 }

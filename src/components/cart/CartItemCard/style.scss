@@ -38,3 +38,10 @@ $secondary-text-color: #80868b;
   font-weight: 600;
   color: $primary-text-color;
 }
+
+.img-container {
+  padding: 0.5rem;
+  .img-fluid {
+    border-radius: 10px;
+  }
+}

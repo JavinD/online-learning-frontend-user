@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { ICourse } from "../../../interfaces";
-import { trimSummary } from "../../../utils/util";
+import { toRupiah, trimSummary } from "../../../utils/util";
 import GenericButton from "../../buttons/GenericButton";
 import CourseCategory from "../../course/Category";
 import "./style.scss";
@@ -40,7 +40,9 @@ export default function CourseCard({ course }: Props) {
             </p>
           </div>
 
-          <p className="card-price">Rp. {course?.price}</p>
+          <p className="card-price">
+            {toRupiah(course?.price ? course.price : 0)}
+          </p>
 
           <NavLink to={link}>
             <GenericButton label="See Details" />

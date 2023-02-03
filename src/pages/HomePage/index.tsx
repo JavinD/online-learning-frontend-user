@@ -13,7 +13,6 @@ import CoursePage from "../User/CoursePage";
 import "./style.scss";
 import LottieComponent from "../../components/animations/Lottie";
 import { useNavigate } from "react-router-dom";
-import Footer from "../../components/navigations/Footer";
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -90,7 +89,7 @@ export default function HomePage() {
               label="Check out Our Courses"
             />
           </div>
-          <div className="col-xl-6 d-flex">
+          <div className="col-md-6 mt-5">
             <LottieComponent animationData={onlineLearning} />
           </div>
         </div>

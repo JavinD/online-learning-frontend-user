@@ -2,7 +2,13 @@ import React from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { IInvoice } from "../../../interfaces";
-import { toastFailed, toastSuccess, toRupiah } from "../../../utils/util";
+import {
+  countTotalAfterVoucher,
+  countTotalPrice,
+  toastFailed,
+  toastSuccess,
+  toRupiah,
+} from "../../../utils/util";
 import GenericButton from "../../buttons/GenericButton";
 import CartItemCard from "../../cart/CartItemCard";
 import GenericInput from "../../inputs/GenericInput";
@@ -108,17 +114,6 @@ export default function InvoiceForm({ invoice }: Props) {
               <GenericInput
                 error=""
                 formText=""
-                label="Benefit Discount"
-                name="discount"
-                onChange={() => {}}
-                required={false}
-                type="text"
-                value={"-" + toRupiah(invoice.total * invoice.benefit_discount)}
-                disabled={true}
-              />
-              <GenericInput
-                error=""
-                formText=""
                 label="Voucher Discount"
                 name="voucher_discount"
                 onChange={() => {}}
@@ -129,6 +124,27 @@ export default function InvoiceForm({ invoice }: Props) {
                   (invoice.voucher
                     ? toRupiah(invoice.voucher.amount)
                     : toRupiah(0))
+                }
+                disabled={true}
+              />
+              <GenericInput
+                error=""
+                formText=""
+                label="Benefit Discount"
+                name="discount"
+                onChange={() => {}}
+                required={false}
+                type="text"
+                value={
+                  "-" +
+                  (invoice.voucher
+                    ? toRupiah(
+                        countTotalAfterVoucher(
+                          invoice.total,
+                          invoice.voucher.amount
+                        ) * invoice.benefit_discount
+                      )
+                    : toRupiah(invoice.total * invoice.benefit_discount))
                 }
                 disabled={true}
               />
@@ -144,9 +160,11 @@ export default function InvoiceForm({ invoice }: Props) {
                 value={
                   invoice.voucher
                     ? toRupiah(
-                        invoice.total -
-                          invoice.voucher.amount -
-                          invoice.total * invoice.benefit_discount
+                        countTotalPrice(
+                          invoice.total,
+                          invoice.benefit_discount,
+                          invoice.voucher.amount
+                        )
                       )
                     : toRupiah(
                         invoice.total - invoice.total * invoice.benefit_discount

@@ -97,8 +97,11 @@ export default function CoursePage({ Banner }: Props) {
   };
 
   const handleCategoryChange = (newValue: any, actionMeta: any) => {
-    setCurrentCategory(newValue.value);
     setPageNumber(1);
+    if (newValue.value === null) {
+      setCurrentCategory("");
+      return;
+    }
   };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {

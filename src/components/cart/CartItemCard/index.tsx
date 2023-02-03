@@ -29,7 +29,7 @@ export default function CartItemCard({ cartItem, handleRemoveItem }: Props) {
   if (instanceOfTransaction(cartItem)) {
     return (
       <div className="d-flex align-items-center mb-3 border shadow-sm bg-light ">
-        <div className="flex-shrink-0">
+        <div className="flex-shrink-0 img-container">
           <img
             src={cartItem.course.img_thumbnail}
             className="img-fluid"

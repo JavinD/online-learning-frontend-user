@@ -42,7 +42,7 @@ $secondary-text-color: #80868b;
 
   .card-body {
     padding: 1rem 2.5rem;
-
+    height: 455px;
     .card-author {
       margin: 1rem 0;
       .card-author-img {
@@ -65,9 +65,6 @@ $secondary-text-color: #80868b;
     }
 
     .card-description {
-      // border-top: $primary-text-color;
-      // border-top-width: 0.01rem;
-      // border-top-style: solid;
       border-bottom: $primary-color;
       border-bottom-width: 0.01rem;
       border-bottom-style: solid;
@@ -82,8 +79,8 @@ $secondary-text-color: #80868b;
 
     .card-price {
       text-align: end;
-      font-size: 1rem;
-      font-weight: 600;
+      font-size: 1.5rem;
+      font-weight: 900;
       color: $primary-text-color;
       margin: 0.8rem 0;
     }

@@ -132,4 +132,34 @@ $secondary-text-color: #80868b;
 
   padding-left: 0;
   padding-right: 0;
+
+  span {
+    svg {
+      color: $primary-color;
+      fill: linear-gradient(
+        to right,
+        $primary-color,
+        $primary-color 50%,
+        $primary-text-color 50%
+      );
+
+      &:hover {
+        fill: $primary-color;
+
+        background-image: linear-gradient(
+          to right,
+          $primary-color,
+          $primary-color 50%,
+          $primary-text-color 50%
+        );
+
+        background-size: 200% 100%;
+        background-position: -100%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        transition: all 0.3s ease-in-out;
+      }
+    }
+  }
 }

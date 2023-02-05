@@ -35,7 +35,7 @@ export default function InvoicePayPage() {
   }, [invoice]);
   return (
     <div className="mt-5">
-      <InvoiceForm invoice={invoice} />
+      <InvoiceForm invoice={invoice} cookies={cookies} />
     </div>
   );
 }

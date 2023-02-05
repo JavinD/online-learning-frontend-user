@@ -16,11 +16,11 @@ import "./styles.scss";
 
 type Props = {
   invoice: IInvoice | undefined;
+  cookies: { access_token?: string };
 };
 
-export default function InvoiceForm({ invoice }: Props) {
+export default function InvoiceForm({ invoice, cookies }: Props) {
   const navigate = useNavigate();
-  const [cookies] = useCookies(["access_token"]);
   const API_URL = process.env.REACT_APP_API_URL_AUTH_USER + "/invoice";
   if (!invoice) {
     return <div></div>;

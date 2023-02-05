@@ -1,5 +1,4 @@
-import React from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { ICourse } from "../../../interfaces";
 import { toRupiah, trimSummary } from "../../../utils/util";
 import GenericButton from "../../buttons/GenericButton";

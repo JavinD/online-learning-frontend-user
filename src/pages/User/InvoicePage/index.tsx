@@ -15,7 +15,7 @@ export default function InvoicePage() {
   const { invoices } = useSelector((state: RootState) => state.invoice);
   const invoiceDispatch: InvoiceDispatch = useDispatch();
   const [pageNumber, setPageNumber] = React.useState(1);
-  const [pageTotal, setPageTotal] = React.useState(1);
+  const [pageTotal] = React.useState(1);
   const [cookies] = useCookies(["access_token"]);
   const [currentSortDir, setCurrentSortDir] = useState<string>("desc");
   const [filterStatus, setFilterStatus] = useState<string>("");

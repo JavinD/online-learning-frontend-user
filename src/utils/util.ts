@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { ICartItem, ICourse, IUserCourse } from "../interfaces";
+import { ICartItem, IUserCourse } from "../interfaces";
 
 export const isAlphaNumeric = (str: string): boolean => {
   var code, i, len;

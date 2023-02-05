@@ -1,8 +1,5 @@
-import React from "react";
-
-import makeAnimated from "react-select/animated";
 import Select from "react-select";
-import { ITag } from "../../../interfaces";
+import makeAnimated from "react-select/animated";
 
 const animatedComponents = makeAnimated();
 

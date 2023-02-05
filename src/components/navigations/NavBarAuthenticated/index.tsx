@@ -13,6 +13,7 @@ import "./style.scss";
 export default function NavBar() {
   const [cookies, removeCookie] = useCookies(["access_token"]);
   const { user } = useSelector((state: RootState) => state.user);
+  const [avatar, setAvatar] = React.useState<string>("");
   const userDispatch: UserDispatch = useDispatch();
   const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = React.useState(false);
@@ -21,6 +22,7 @@ export default function NavBar() {
   useEffect(() => {
     if (user?.level) {
       level.current = user?.level_id;
+      setAvatar(chooseBadgeByLevel(user?.level_id));
     }
   }, [user]);
 
@@ -85,9 +87,7 @@ export default function NavBar() {
                   className="btn nav-link nav-link-avatar dropdown-toggle ms-lg-5"
                   onClick={() => setShowDropdown(!showDropdown)}
                 >
-                  <span className="nav-avatar">
-                    {chooseBadgeByLevel(level.current)}
-                  </span>
+                  <span className="nav-avatar">{avatar}</span>
                 </button>
                 <ul
                   className={"dropdown-menu" + (showDropdown ? " show" : "")}

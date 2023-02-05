@@ -9,6 +9,6 @@ export const chooseBadgeByLevel = (level: number): string => {
     case 4:
       return "🧑‍🏫";
     default:
-      return "";
+      return "👶";
   }
 };

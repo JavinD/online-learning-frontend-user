@@ -28,6 +28,7 @@ export default function ProfilePage() {
   const { user } = useSelector((state: RootState) => state.user);
   const [cookies] = useCookies(["access_token"]);
   const userDispatch: UserDispatch = useDispatch();
+  const [avatar, setAvatar] = React.useState<string>("");
 
   const [updateUser, setUpdateUser] = useState({
     fullname: "",
@@ -40,6 +41,12 @@ export default function ProfilePage() {
     phone_no: "",
     address: "",
   });
+
+  useEffect(() => {
+    if (user?.level) {
+      setAvatar(chooseBadgeByLevel(user?.level_id));
+    }
+  }, [user]);
 
   const validateError = (name: string, value: string) => {
     let error = "";
@@ -182,9 +189,7 @@ export default function ProfilePage() {
             <div className="col-lg-8">
               <div className="card mb-4">
                 <div className="profile-header card-body text-center">
-                  <div className="avatar">
-                    {chooseBadgeByLevel(user?.level_id ? user.level_id : 0)}
-                  </div>
+                  <div className="avatar">{avatar}</div>
                   <h5 className="my-3 profile-name">
                     My name is {user?.fullname}
                   </h5>

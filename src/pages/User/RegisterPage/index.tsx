@@ -106,7 +106,7 @@ export default function RegisterPage() {
         error = "Password confirmation is required";
       }
 
-      if (value.length <= 8 || value.length > 20) {
+      if (value.length < 8 || value.length > 20) {
         error = "Password confirmation must be between 8 to 20 characters";
       }
 

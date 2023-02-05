@@ -40,7 +40,7 @@ export default function LoginPage() {
         error = "Password is required";
       }
 
-      if (value.length <= 8 || value.length >= 20) {
+      if (value.length < 8 || value.length > 20) {
         error = "Password is must be between 8 to 20 characters";
       }
       setError({

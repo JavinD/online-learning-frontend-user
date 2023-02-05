@@ -44,7 +44,7 @@ export default function RegisterPage() {
         error = "Full Name is required";
       }
 
-      if (value.length <= 5 || value.length >= 20) {
+      if (value.length < 5 || value.length > 20) {
         error = "Full name must be between 5 to 20 characters";
       }
       setError({
@@ -58,7 +58,7 @@ export default function RegisterPage() {
         error = "Username is required";
       }
 
-      if (value.length <= 5 || value.length >= 15) {
+      if (value.length < 5 || value.length > 15) {
         error = "Username must be between 5 to 15 characters";
       }
 
@@ -92,7 +92,7 @@ export default function RegisterPage() {
         error = "Password is required";
       }
 
-      if (value.length <= 8 || value.length >= 20) {
+      if (value.length < 8 || value.length > 20) {
         error = "Password must be between 8 to 20 characters";
       }
       setError({
@@ -106,7 +106,7 @@ export default function RegisterPage() {
         error = "Password confirmation is required";
       }
 
-      if (value.length <= 8 || value.length >= 20) {
+      if (value.length <= 8 || value.length > 20) {
         error = "Password confirmation must be between 8 to 20 characters";
       }
 
@@ -124,7 +124,7 @@ export default function RegisterPage() {
         error = "Password confirmation is required";
       }
 
-      if (value.length <= 8 || value.length >= 20) {
+      if (value.length < 8 || value.length > 20) {
         error = "Password confirmation must be between 8 to 20 characters";
       }
 
@@ -142,7 +142,7 @@ export default function RegisterPage() {
         error = "Address confirmation is required";
       }
 
-      if (value.length <= 5 || value.length >= 100) {
+      if (value.length < 5 || value.length > 100) {
         error = "Address must be between 5 to 100 characters";
       }
       setError({
@@ -156,7 +156,7 @@ export default function RegisterPage() {
         error = "Phone Number is required";
       }
 
-      if (value.length <= 10 || value.length >= 15) {
+      if (value.length < 10 || value.length > 15) {
         error = "Phone number must be between 10 to 15 digits";
       }
 

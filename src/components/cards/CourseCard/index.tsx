@@ -19,6 +19,8 @@ export default function CourseCard({ course }: Props) {
           className="card-img-top trending-card-img"
           src={course?.img_thumbnail}
           alt={course?.title + " thumbnail"}
+          width="250"
+          height="250"
         />
         <CourseCategory label={course?.category.name} />
         <div className="card-body">

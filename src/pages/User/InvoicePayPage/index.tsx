@@ -34,7 +34,7 @@ export default function InvoicePayPage() {
     }
   }, [invoice]);
   return (
-    <div>
+    <div className="mt-5">
       <InvoiceForm invoice={invoice} />
     </div>
   );

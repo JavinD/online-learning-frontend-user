@@ -249,10 +249,12 @@ export default function CourseDetailPage() {
                 </span>
               </div>
               <div className="row">
-                <div className="course-title col-md-6">
+                <div className="course-title col-xl-10">
                   <h1>{course?.title}</h1>
                 </div>
-                <CourseCategory label={course?.category.name} />
+                <div className="mt-2 mb-4">
+                  <CourseCategory label={course?.category.name} />
+                </div>
               </div>
 
               <div className="course-img">

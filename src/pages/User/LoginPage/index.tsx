@@ -1,6 +1,6 @@
 import { ChangeEventHandler, FormEventHandler, useState } from "react";
 import { useCookies } from "react-cookie";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import LoginForm from "../../../components/forms/LoginForm";
 import ToastComponent from "../../../components/toast";
@@ -21,6 +21,7 @@ export default function LoginPage() {
   });
   const [cookies, setCookie] = useCookies(["access_token"]);
   const API_URL = process.env.REACT_APP_API_URL;
+  const location = useLocation();
 
   const validateError = (name: string, value: string) => {
     let error = "";
@@ -78,7 +79,7 @@ export default function LoginPage() {
           setCookie("access_token", res.access_token, { path: "/" });
         }
 
-        navigate("/");
+        navigate("/", { replace: true, state: { from: location } });
       })
       .catch((error) => {
         toastFailed("Invalid email, username or password");

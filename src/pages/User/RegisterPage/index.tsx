@@ -1,5 +1,4 @@
 import { ChangeEventHandler, FormEventHandler, useState } from "react";
-import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import RegisterForm from "../../../components/forms/RegisterForm";
@@ -9,7 +8,7 @@ import {
   isAlphaNumeric,
   isNumber,
   toastFailed,
-  validateEmail,
+  validateEmail
 } from "../../../utils/util";
 import "./styles.scss";
 
@@ -37,7 +36,6 @@ export default function RegisterPage() {
     referrer: "",
     username: "",
   });
-  const [cookies, setCookie] = useCookies(["access_token"]);
 
   const validateError = (name: string, value: string) => {
     let error = "";
@@ -208,10 +206,6 @@ export default function RegisterPage() {
         return response.json();
       })
       .then((res) => {
-        if (res.access_token) {
-          setCookie("access_token", res.access_token, { path: "/" });
-        }
-
         navigate("/user-login");
       })
       .catch((error) => {

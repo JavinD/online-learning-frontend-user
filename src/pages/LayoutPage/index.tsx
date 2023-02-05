@@ -12,10 +12,10 @@ export default function LayoutPage() {
   const decodedToken = decodeToken(cookies.access_token);
   const isMyTokenExpired = isExpired(cookies.access_token);
 
-  if (decodedToken === null || isMyTokenExpired === true) {
+  if (decodedToken !== null || isMyTokenExpired === false) {
     return (
       <div>
-        <NavBarUnauthenticated />
+        <NavBarAuthenticated />
         <Outlet />
         <Footer />
       </div>
@@ -24,7 +24,7 @@ export default function LayoutPage() {
 
   return (
     <div>
-      <NavBarAuthenticated />
+      <NavBarUnauthenticated />
       <Outlet />
       <Footer />
     </div>

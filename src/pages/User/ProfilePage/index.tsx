@@ -55,7 +55,7 @@ export default function ProfilePage() {
         error = "Full Name is required";
       }
 
-      if (value.length < 5 || value.length > 20) {
+      if (value.length <= 5 || value.length >= 20) {
         error = "Full name must be between 5 to 20 characters";
       }
       setErrors({
@@ -69,8 +69,8 @@ export default function ProfilePage() {
         error = "Phone Number is required";
       }
 
-      if (value.length < 10 || value.length > 15) {
-        error = "Phone number must be between 9 to 15 digits";
+      if (value.length <= 10 || value.length >= 15) {
+        error = "Phone number must be between 10 to 15 digits";
       }
 
       if (!isNumber(value)) {
@@ -88,7 +88,7 @@ export default function ProfilePage() {
         error = "Address confirmation is required";
       }
 
-      if (value.length < 5 || value.length > 100) {
+      if (value.length <= 5 || value.length >= 100) {
         error = "Address must be between 5 to 100 characters";
       }
       setErrors({

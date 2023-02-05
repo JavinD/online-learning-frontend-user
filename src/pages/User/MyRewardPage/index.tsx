@@ -30,11 +30,16 @@ export default function MyRewardPage() {
                 <section className="row g-2">
                   <h1>Vouchers</h1>
 
-                  {voucher && voucher.length > 0
-                    ? voucher.map((voucher) => (
-                        <VoucherCard key={voucher.id} voucher={voucher} />
-                      ))
-                    : []}
+                  {voucher && voucher.length > 0 ? (
+                    voucher.map((voucher) => (
+                      <VoucherCard key={voucher.id} voucher={voucher} />
+                    ))
+                  ) : (
+                    <div>
+                      {/* No Vouchers available */}
+                      <h3 className="text-center">No Vouchers Available</h3>
+                    </div>
+                  )}
                 </section>
               </div>
             </div>

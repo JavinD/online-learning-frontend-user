@@ -37,6 +37,9 @@ $secondary-text-color: #80868b;
           background-position: 0;
         }
       }
+      .nav-link-avatar {
+        -webkit-text-fill-color: inherit;
+      }
 
       .nav-item {
         .nav-link {

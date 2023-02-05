@@ -12,7 +12,7 @@ export default function CourseGrids({ courses }: Props) {
 
   return (
     <div className="container">
-      <div className="row trending-card-container d-flex justify-content-center">
+      <div className="row trending-card-container d-flex justify-content-start">
         {courses.map((course: ICourse) => {
           return <CourseCard key={course.slug} course={course} />;
         })}

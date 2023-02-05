@@ -1,6 +1,4 @@
 import React from "react";
-import { useCookies } from "react-cookie";
-import { toast } from "react-toastify";
 import { ICartItem, ITransaction } from "../../../interfaces";
 import { toRupiah } from "../../../utils/util";
 import CourseCategory from "../../course/Category";
@@ -63,7 +61,7 @@ export default function CartItemCard({ cartItem, handleRemoveItem }: Props) {
 
   return (
     <div className="d-flex align-items-center mb-5 border shadow-sm bg-light">
-      <div className="flex-shrink-0">
+      <div className="flex-shrink-0 img-container">
         <img
           src={cartItem.course.img_thumbnail}
           className="img-fluid"

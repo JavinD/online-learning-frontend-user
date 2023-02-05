@@ -61,6 +61,8 @@ export default function GenericPagination({
                   </button>
                 </li>
               );
+            } else {
+              return null;
             }
           })}
 

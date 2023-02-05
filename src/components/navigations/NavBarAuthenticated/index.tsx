@@ -82,10 +82,12 @@ export default function NavBar() {
               {/* navbar dropdown user */}
               <div className="nav-item dropdown">
                 <button
-                  className="btn nav-link dropdown-toggle ms-lg-5"
+                  className="btn nav-link nav-link-avatar dropdown-toggle ms-lg-5"
                   onClick={() => setShowDropdown(!showDropdown)}
                 >
-                  {chooseBadgeByLevel(level.current)}
+                  <span className="nav-avatar">
+                    {chooseBadgeByLevel(level.current)}
+                  </span>
                 </button>
                 <ul
                   className={"dropdown-menu" + (showDropdown ? " show" : "")}

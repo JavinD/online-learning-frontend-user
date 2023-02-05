@@ -105,7 +105,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="container row trending-card-container d-flex justify-content-center ">
+          <div className="container row trending-card-container d-flex justify-content-start">
             {trendingCourses.map((course: ICourse) => {
               return <CourseCard key={course.slug} course={course} />;
             })}
